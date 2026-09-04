@@ -28,6 +28,9 @@
 - Commercially reusable Pexels food photography on product guides, with source credits
 
 ## ✅ Fixed Bugs
+- Replaced independent hero scaling with a single physical product group driven by package width and height data
+- Restyled product-detail heroes with their category colour and a centered, padded packshot safe area
+- Constrained homepage packshots to a padded coloured safe-zone so no product is cropped or overlaps the copy
 - Kept every modal packshot inside its coloured product bay with aspect-ratio-safe scaling and consistent editorial padding
 - Replaced the homepage hero's hard vertical seam and soft colour boundary with one intentional, crisp editorial diagonal
 - Assigned package-specific hero proportions so bottles, grinders, tins, jars, boxes and bags keep believable relative sizes

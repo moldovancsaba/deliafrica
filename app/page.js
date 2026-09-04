@@ -118,7 +118,7 @@ export default function Home() {
       </div>
       <div className={`hero-stage hero-category-${heroScene.category}`} style={{ backgroundImage: `url(${heroScene.image})` }}>
         <div className="sun-disc">FROM<br/>CAPE<br/>TO<br/>YOU</div>
-        {heroProducts.map((product, index) => <ProductVisual product={product} large className={`hero-product hero-count-${heroProducts.length} hero-product-${index + 1}`} key={product.id}/>)}
+        <div className={`hero-products hero-products-${heroProducts.length}`}>{heroProducts.map((product, index) => <ProductVisual product={product} large className={`hero-product hero-count-${heroProducts.length} hero-product-${index + 1}`} key={product.id}/>)}</div>
         <div className="spice-sweep">peri · coriander · rooibos · smoke</div>
       </div>
     </section>

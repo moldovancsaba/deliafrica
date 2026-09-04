@@ -30,7 +30,7 @@ export default async function ProductPage({ params }) {
     { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Kezdőlap', item: siteUrl }, { '@type': 'ListItem', position: 2, name: item.categoryName, item: `${siteUrl}/categories/${item.category}` }, { '@type': 'ListItem', position: 3, name: item.name, item: `${siteUrl}/products/${item.slug}` }] }
   ];
 
-  return <main className="product-page">
+  return <main className={`product-page category-${item.tone}`}>
     {schemas.map((schema, index) => <script key={index} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }} />)}
     <header className="site-header product-header"><Link href="/" className="brand-link" aria-label="deli.africa kezdőlap"><BrandLogo /></Link><nav><Link href="/#shop">Shop</Link><Link href="/#story">Történet</Link></nav><Link className="button button-dark" href="/#shop">Vissza a shophoz</Link></header>
     <div className="product-breadcrumb"><Link href="/">Kezdőlap</Link><span>/</span><Link href={`/categories/${item.category}`}>{item.categoryName}</Link><span>/</span><span>{item.name}</span></div>
