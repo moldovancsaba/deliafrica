@@ -28,6 +28,7 @@
 - Commercially reusable Pexels food photography on product guides, with source credits
 
 ## ✅ Fixed Bugs
+- Removed aspect-ratio-distorting hero background sizing and replaced unsupported CSS dimension multiplication in the single-product presentation
 - Simplified the homepage hero to one stable, category-related product per page load
 - Replaced independent hero scaling with a single physical product group driven by package width and height data
 - Restyled product-detail heroes with their category colour and a centered, padded packshot safe area
