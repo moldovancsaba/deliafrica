@@ -3,12 +3,8 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { categories, products, formatPrice } from '@/lib/products';
-
-function ProductVisual({ product, large = false }) {
-  return <div className={`product-visual ${product.tone} ${large ? 'large' : ''}`} aria-label={product.name}>
-    <span className={`pack ${product.visual}`}><i>{product.name.split(' ')[0]}</i><b>deli.</b><small>south africa</small></span>
-  </div>;
-}
+import ProductVisual from '@/app/components/ProductVisual';
+import BrandLogo from '@/app/components/BrandLogo';
 
 export default function Home() {
   const [category, setCategory] = useState('all');
@@ -55,7 +51,7 @@ export default function Home() {
 
   return <main>
     <header className="site-header">
-      <a href="#top" className="brand">deli.<strong>africa</strong><span>curated delights from south africa</span></a>
+      <a href="#top" className="brand-link" aria-label="deli.africa kezdőlap"><BrandLogo /></a>
       <nav><a href="#shop">Shop</a><a href="#story">Történet</a><a href="#why">Miért mi?</a><Link href="/dashboard">Dashboard</Link></nav>
       <button className="cart-button" onClick={() => setCartOpen(true)}>Kosár <span>{cartCount}</span></button>
     </header>
@@ -107,7 +103,7 @@ export default function Home() {
     </section>
 
     <footer>
-      <div className="brand inverse">deli.<strong>africa</strong><span>curated delights from south africa</span></div>
+      <BrandLogo inverse />
       <p>Budapest · Hungary<br/>Demo webshop MVP</p>
       <div><a href="#shop">Shop</a><Link href="/dashboard">System dashboard</Link></div>
     </footer>
@@ -115,7 +111,7 @@ export default function Home() {
     {detail && <div className="modal-backdrop" onClick={() => setDetail(null)}><div className="detail-modal" onClick={e => e.stopPropagation()}>
       <button className="close" onClick={() => setDetail(null)}>×</button>
       <ProductVisual product={detail} large/>
-      <div><span className="badge inline">{detail.badge}</span><h2>{detail.name}</h2><p>{detail.story}</p><strong>{formatPrice(detail.price)}</strong><button className="button button-red" onClick={() => { add(detail.id); setDetail(null); }}>Kosárba</button></div>
+      <div><span className="badge inline">{detail.badge}</span><h2>{detail.name}</h2><p>{detail.story}</p><strong>{formatPrice(detail.price)}</strong><div className="modal-actions"><button className="button button-red" onClick={() => { add(detail.id); setDetail(null); }}>Kosárba</button><Link className="button button-outline" href={`/products/${detail.slug}`}>Többet akarok tudni</Link></div></div>
     </div></div>}
 
     <aside className={`cart-drawer ${cartOpen ? 'open' : ''}`}>
