@@ -14,7 +14,7 @@ export default function Dashboard() {
       setHealth(await res.json());
       setError('');
     } catch (e) {
-      setError(e.message);
+      setError(e instanceof Error ? e.message : 'Health endpoint failed');
     }
   }
 
@@ -25,6 +25,8 @@ export default function Dashboard() {
   }, []);
 
   const mongoOk = health?.mongo?.connected;
+  const userState = health?.users?.state || 'Ellenőrzés…';
+  const userTracking = health?.users?.tracking === 'enabled';
 
   return <main className="dashboard-shell">
     <div className="dashboard-top">
@@ -48,10 +50,10 @@ export default function Dashboard() {
         <p>{health?.mongo?.configured === false ? 'MONGODB_URI nincs beállítva.' : 'Adatbázis-kapcsolat állapota.'}</p>
       </article>
       <article className="metric">
-        <span className="status-dot ok" />
+        <span className={`status-dot ${userTracking && health?.users?.active > 0 ? 'ok' : 'warn'}`} />
         <small>Felhasználói kapcsolat</small>
-        <strong>Aktív felület</strong>
-        <p>A storefront elérhető; Socket.io végpont konfigurálva.</p>
+        <strong>{userState}</strong>
+        <p>{userTracking ? `${health.users.active} aktív Socket.io kapcsolat.` : 'A Socket.io jelenlét-számlálás még nincs bekapcsolva.'}</p>
       </article>
       <article className="metric">
         <small>Környezet</small>
@@ -69,7 +71,7 @@ export default function Dashboard() {
       <h2>Szolgáltatások</h2>
       <div className="service-row"><span>Storefront</span><b>Online</b></div>
       <div className="service-row"><span>Orders API</span><b>Online</b></div>
-      <div className="service-row"><span>Socket.io endpoint</span><b>Ready</b></div>
+      <div className="service-row"><span>Socket.io endpoint</span><b>{health?.realtime?.status === 'endpoint-ready' ? 'Ready' : 'Checking'}</b></div>
       <div className="service-row"><span>MongoDB persistence</span><b>{mongoOk ? 'Connected' : 'Fallback demo mode'}</b></div>
     </section>
   </main>;
