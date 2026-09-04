@@ -8,6 +8,9 @@ import ProductVisual from '@/app/components/ProductVisual';
 import BrandLogo from '@/app/components/BrandLogo';
 import { APP_VERSION } from '@/lib/version';
 
+const heroProductIds = new Set(['peri-hot', 'springbok-pate', 'milo', 'rooibos', 'zebra-pate', 'rajah-curry', 'biltong']);
+const heroCatalogue = products.filter((product) => heroProductIds.has(product.id));
+
 export default function Home() {
   const [category, setCategory] = useState('all');
   const [cart, setCart] = useState({});
@@ -17,7 +20,7 @@ export default function Home() {
   const [orderState, setOrderState] = useState(null);
   const [form, setForm] = useState({ customerName: '', email: '', phone: '', address: '' });
   const [session, setSession] = useState(null);
-  const [heroProducts, setHeroProducts] = useState(() => products.slice(0, 3));
+  const [heroProducts, setHeroProducts] = useState(() => heroCatalogue.slice(0, 3));
   const cartReady = useRef(false);
 
   useEffect(() => {
@@ -34,7 +37,7 @@ export default function Home() {
 
   useEffect(() => {
     const chooseThree = () => {
-      const shuffled = [...products];
+      const shuffled = [...heroCatalogue];
       for (let index = shuffled.length - 1; index > 0; index--) {
         const swapWith = Math.floor(Math.random() * (index + 1));
         [shuffled[index], shuffled[swapWith]] = [shuffled[swapWith], shuffled[index]];
@@ -109,7 +112,7 @@ export default function Home() {
       </div>
       <div className="hero-stage">
         <div className="sun-disc">FROM<br/>CAPE<br/>TO<br/>YOU</div>
-        {heroProducts.map((product) => <ProductVisual product={product} large key={product.id}/>)}
+        {heroProducts.map((product, index) => <ProductVisual product={product} large className={`hero-product hero-product-${index + 1}`} key={product.id}/>)}
         <div className="spice-sweep">peri · coriander · rooibos · smoke</div>
       </div>
     </section>
@@ -148,7 +151,7 @@ export default function Home() {
       <div><a href="#shop">Shop</a><Link href="/dashboard">System dashboard</Link></div>
     </footer>
 
-    {detail && <div className="modal-backdrop" onClick={() => setDetail(null)}><div className="detail-modal" onClick={e => e.stopPropagation()}>
+    {detail && <div className="modal-backdrop" onClick={() => setDetail(null)}><div className={`detail-modal category-${detail.category}`} onClick={e => e.stopPropagation()}>
       <button className="close" onClick={() => setDetail(null)}>×</button>
       <ProductVisual product={detail} large/>
       <div><span className="badge inline">{detail.badge}</span><h2>{detail.name}</h2><p>{detail.story}</p><strong>{formatPrice(detail.price)}</strong><div className="modal-actions">{detail.price != null && <button className="button button-red" onClick={() => { add(detail.id); setDetail(null); }}>Kosárba</button>}<Link className="button button-outline" href={`/products/${detail.slug}`}>Többet akarok tudni</Link></div></div>

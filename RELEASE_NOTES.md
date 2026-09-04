@@ -33,6 +33,10 @@
 - Rebuilt the logo geometry so the circular type path and badge background are concentric
 - Reworked customer-facing copy around taste, occasions and practical buying guidance
 - Replaced generic editorial-photo captions with a specific first-taste recommendation for every product
+- Extended the category colour system into desktop and mobile product modals
+- Restaged the hero as an oversized, overlapping editorial composition at −10°, 0° and +10°
+- Added transparent-background cutouts for the verified hero rotation set
+- Normalised transparent image bounds and aligned all hero products to one baseline
 
 ## ✅ Known Issues
 - Prices are still awaiting confirmation for nine of the 13 products; these are visibly marked and cannot be ordered
