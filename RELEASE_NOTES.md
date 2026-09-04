@@ -32,6 +32,7 @@
 - Removed the obsolete “Demo webshop MVP” production label
 - Rebuilt the logo geometry so the circular type path and badge background are concentric
 - Reworked customer-facing copy around taste, occasions and practical buying guidance
+- Replaced generic editorial-photo captions with a specific first-taste recommendation for every product
 
 ## ✅ Known Issues
 - Prices are still awaiting confirmation for nine of the 13 products; these are visibly marked and cannot be ordered
