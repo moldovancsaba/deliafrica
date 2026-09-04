@@ -26,7 +26,7 @@ export default function Home() {
   const [form, setForm] = useState({ customerName: '', email: '', phone: '', address: '' });
   const [session, setSession] = useState(null);
   const [heroScene, setHeroScene] = useState(heroScenes[0]);
-  const [heroProducts, setHeroProducts] = useState(() => products.filter(product => product.category === heroScenes[0].category).slice(0, 3));
+  const [heroProducts, setHeroProducts] = useState(() => products.filter(product => product.category === heroScenes[0].category).slice(0, 1));
   const cartReady = useRef(false);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function Home() {
         [shuffled[index], shuffled[swapWith]] = [shuffled[swapWith], shuffled[index]];
       }
       setHeroScene(scene);
-      setHeroProducts(shuffled.slice(0, 3));
+      setHeroProducts(shuffled.slice(0, 1));
     };
     chooseScene();
   }, []);
