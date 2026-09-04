@@ -1,5 +1,6 @@
 import './globals.css';
 import './card-branding.css';
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata = {
   title: 'deli.africa — Dél-Afrika, válogatva',
@@ -7,5 +8,5 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  return <html lang="hu"><body>{children}</body></html>;
+  return <html lang="hu"><body>{children}<Analytics /></body></html>;
 }
