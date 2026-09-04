@@ -19,10 +19,17 @@ A production-oriented Next.js webshop MVP inspired by the deli.africa visual ide
 - MongoDB persistence with graceful demo fallback when no DB is configured
 - General Dashboard: MongoDB state, user surface state, runtime, latency and service health
 - `/api/health`, `/api/orders`, `/api/socket-io`
+- DoneIsBetter OAuth/OIDC buyer identity with PKCE
+- SSO permission-aware admin protection for `/dashboard`
 
 ## Environment
 
-Set `MONGODB_URI` in Vercel to enable persistent orders. After adding or changing production environment variables, trigger a new production deployment so the runtime receives the updated values.
+Copy `.env.example` to `.env.local` and configure `MONGODB_URI`, `SSO_CLIENT_ID`, `SSO_CLIENT_SECRET`, and `APP_URL`. The client secret must remain server-only and must never be committed. Register both production callbacks with the SSO client:
+
+- `https://deli.doneisbetter.com/auth/callback`
+- `https://deli.doneisbetter.com/api/oauth/callback`
+
+After adding or changing production environment variables, trigger a new production deployment so the runtime receives the updated values.
 
 ## Local
 

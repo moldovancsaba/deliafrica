@@ -9,6 +9,7 @@ const ItemSchema = new mongoose.Schema({
 
 const OrderSchema = new mongoose.Schema({
   reference: { type: String, required: true, unique: true },
+  ssoUserId: { type: String, required: true, index: true },
   customerName: { type: String, required: true, trim: true },
   email: { type: String, required: true, trim: true, lowercase: true },
   phone: { type: String, trim: true },

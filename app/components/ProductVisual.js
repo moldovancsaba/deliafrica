@@ -1,5 +1,7 @@
+import Image from 'next/image';
+
 export default function ProductVisual({ product, large = false }) {
-  return <div className={`product-visual ${product.tone} ${large ? 'large' : ''}`} role="img" aria-label={`${product.name} stilizált termékillusztráció`}>
-    <span className={`pack ${product.visual}`}><i>{product.name.split(' ')[0]}</i><b>deli.</b><small>south africa</small></span>
+  return <div className={`product-visual ${product.tone} ${large ? 'large' : ''}`}>
+    {product.image ? <Image className="product-photo" src={product.image} alt={`${product.name} termékcsomagolás`} fill sizes={large ? '(max-width: 650px) 30vw, 180px' : '(max-width: 650px) 80vw, 25vw'} /> : <span className={`pack ${product.visual}`}><i>{product.name.split(' ')[0]}</i><b>deli.</b><small>south africa</small></span>}
   </div>;
 }

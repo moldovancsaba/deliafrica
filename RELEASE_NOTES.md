@@ -1,4 +1,4 @@
-# Release Notes — v0.2.0
+# Release Notes — v0.3.0
 
 ## ✅ New Features
 - Complete deli.africa storefront MVP
@@ -13,6 +13,14 @@
 - Rich Hungarian product guides covering origin context, flavour, uses, serving, storage and FAQ
 - Product, FAQ and breadcrumb JSON-LD plus dedicated page metadata and canonical URLs
 - “Többet akarok tudni” modal action linking directly to each product page
+- DoneIsBetter OAuth/OIDC sign-in with Authorization Code, PKCE, state and nonce protection
+- SSO-identified buyer records and permission-aware checkout
+- Admin-only dashboard access for approved SSO users with the `admin` app role
+- Visible v0.3.0 release identifier across storefront, product pages and admin dashboard
+- Exactly 13 catalogue products using the supplied product-pack photography
+- Six-card visual category selector aligned to the deli.africa brand board
+- Three distinct hero products, randomly refreshed every eight seconds
+- Commercially reusable Pexels food photography on product guides, with source credits
 
 ## ✅ Fixed Bugs
 - No known application crashes in the initial release
@@ -20,18 +28,23 @@
 - MongoDB connection failures fall back safely instead of crashing the storefront
 - Replaced the text-built header mark with the supplied deli.africa logo asset
 - Corrected card logo positioning with a consistent true bottom-right inset
+- Checkout no longer trusts client-submitted buyer identity
+- Removed the obsolete “Demo webshop MVP” production label
+- Rebuilt the logo geometry so the circular type path and badge background are concentric
+- Reworked customer-facing copy around taste, occasions and practical buying guidance
 
 ## ✅ Known Issues
-- Product visuals are stylised placeholders, not final licensed product photography
+- Prices are still awaiting confirmation for nine of the 13 products; these are visibly marked and cannot be ordered
 - Payment processing is intentionally not implemented in this MVP
 - Persistent Socket.io connections depend on Vercel websocket runtime behaviour; the endpoint is prepared but the current shop does not require live events to complete a purchase
 - Orders are non-persistent until `MONGODB_URI` is configured in Vercel
+- SSO login requires the OAuth client ID and secret to be configured in Vercel
 
 ## ✅ Future Roadmap
-- Real product photography and CMS-managed inventory
+- CMS-managed inventory and confirmed pricing for the complete catalogue
 - Payment integration
 - Delivery calculation and transactional e-mail
 - Admin order management
 - Inventory and stock events over Socket.io
 - Customer accounts and saved favourites
-- Licensed product photography and verified manufacturer specifications for every item
+- Verified manufacturer specifications for every item
