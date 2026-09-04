@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import BrandLogo from '@/app/components/BrandLogo';
 import ProductVisual from '@/app/components/ProductVisual';
+import AddToCartButton from '@/app/components/AddToCartButton';
 import { categories, products, formatPrice } from '@/lib/products';
 import { APP_VERSION } from '@/lib/version';
 
@@ -43,7 +44,7 @@ export default async function CategoryPage({ params }) {
     <div className="product-breadcrumb"><Link href="/">Kezdőlap</Link><span>/</span><span>{category.label}</span></div>
     <section className="category-hero"><div><span className="eyebrow">VÁLOGATÁS · {items.length} TERMÉK</span><h1>{data.title}</h1><p>{data.lead}</p></div><div className="category-hero-art" style={{ backgroundImage: `url(${heroScenes[slug]})` }}><ProductVisual product={items[0]} large /></div></section>
     <section className="category-story"><div><span className="eyebrow dark">MIÉRT ÉRDEMES MEGKÓSTOLNI?</span><h2>Ízek, amelyekhez rögtön van ötleted.</h2></div><div><p>{data.context}</p><strong>{data.tip}</strong></div></section>
-    <section className="category-products"><span className="eyebrow dark">A KATEGÓRIA TERMÉKEI</span><h2>Válassz kedved szerint.</h2><div>{items.map((item) => <Link href={`/products/${item.slug}`} key={item.id}><ProductVisual product={item}/><small>{item.subtitle}</small><h3>{item.name}</h3><p>{item.details.summary}</p><b>{formatPrice(item.price)}</b><span>Részletek →</span></Link>)}</div></section>
+    <section className="category-products"><span className="eyebrow dark">A KATEGÓRIA TERMÉKEI</span><h2>Válassz kedved szerint.</h2><div>{items.map((item) => <article className="category-product-card" key={item.id}><Link className="category-product-link" href={`/products/${item.slug}`}><ProductVisual product={item}/><small>{item.subtitle}</small><h3>{item.name}</h3><p>{item.details.summary}</p></Link><div className="category-product-actions"><b>{formatPrice(item.price)}</b>{item.price == null ? <button className="button button-muted" disabled>Hamarosan</button> : <AddToCartButton productId={item.id} />}</div><Link className="category-detail-link" href={`/products/${item.slug}`}>Részletek és tálalási ötletek →</Link></article>)}</div></section>
     <footer><BrandLogo inverse /><p>Budapest · Hungary<br />deli.africa v{APP_VERSION}</p><div><Link href="/#shop">Shop</Link></div></footer>
   </main>;
 }

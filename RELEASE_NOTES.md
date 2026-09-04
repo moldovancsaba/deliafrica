@@ -1,6 +1,7 @@
 # Release Notes — v0.5.0
 
 ## ✅ New Features
+- Added direct, persistent basket actions to every purchasable product on all six category landing pages
 - Expanded the homepage story and value proposition into substantive, buyer-focused sections with clear product-selection guidance
 - Added five category-specific editorial hero environments with relevant food and serving props
 - Added six dedicated category collection pages with readable `/categories/...` URLs, useful background, selection guidance and structured data
@@ -27,6 +28,9 @@
 - Commercially reusable Pexels food photography on product guides, with source credits
 
 ## ✅ Fixed Bugs
+- Kept every modal packshot inside its coloured product bay with aspect-ratio-safe scaling and consistent editorial padding
+- Replaced the homepage hero's hard vertical seam and soft colour boundary with one intentional, crisp editorial diagonal
+- Assigned package-specific hero proportions so bottles, grinders, tins, jars, boxes and bags keep believable relative sizes
 - Recognised Vercel's integration-prefixed `deli_MONGODB_URI` as well as the standard `MONGODB_URI`, so the live dashboard can use the attached database
 - Changed the random hero from unrelated products to one coherent category per page load
 - Normalised hero scale by package type so bottles, tins, boxes and bags read in believable proportion
