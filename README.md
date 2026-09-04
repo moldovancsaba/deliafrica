@@ -6,7 +6,7 @@ A production-oriented Next.js webshop MVP inspired by the deli.africa visual ide
 
 - Next.js (frontend + backend)
 - Socket.io / Socket.io Client (realtime-ready transport)
-- MongoDB + Mongoose (order persistence when `MONGODB_URI` is configured)
+- MongoDB + Mongoose (order persistence with `MONGODB_URI` or Vercel's integration-prefixed `deli_MONGODB_URI`)
 - Vercel (production hosting)
 - GitHub (version control)
 
@@ -24,7 +24,7 @@ A production-oriented Next.js webshop MVP inspired by the deli.africa visual ide
 
 ## Environment
 
-Copy `.env.example` to `.env.local` and configure `MONGODB_URI`, `SSO_CLIENT_ID`, `SSO_CLIENT_SECRET`, and `APP_URL`. The client secret must remain server-only and must never be committed. Register both production callbacks with the SSO client:
+Copy `.env.example` to `.env.local` and configure `MONGODB_URI` (the app also accepts Vercel's `deli_MONGODB_URI`), `SSO_CLIENT_ID`, `SSO_CLIENT_SECRET`, and `APP_URL`. The client secret must remain server-only and must never be committed. Register both production callbacks with the SSO client:
 
 - `https://deli.doneisbetter.com/auth/callback`
 - `https://deli.doneisbetter.com/api/oauth/callback`

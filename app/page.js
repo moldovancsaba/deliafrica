@@ -8,8 +8,13 @@ import ProductVisual from '@/app/components/ProductVisual';
 import BrandLogo from '@/app/components/BrandLogo';
 import { APP_VERSION } from '@/lib/version';
 
-const heroProductIds = new Set(['peri-hot', 'springbok-pate', 'milo', 'rooibos', 'zebra-pate', 'rajah-curry', 'biltong']);
-const heroCatalogue = products.filter((product) => heroProductIds.has(product.id));
+const heroScenes = [
+  { category: 'braai', image: '/hero-scenes/braai.webp' },
+  { category: 'spices', image: '/hero-scenes/spices.webp' },
+  { category: 'pate', image: '/hero-scenes/pate.webp' },
+  { category: 'tea', image: '/hero-scenes/tea.webp' },
+  { category: 'snacks', image: '/hero-scenes/snacks.webp' }
+];
 
 export default function Home() {
   const [category, setCategory] = useState('all');
@@ -20,7 +25,8 @@ export default function Home() {
   const [orderState, setOrderState] = useState(null);
   const [form, setForm] = useState({ customerName: '', email: '', phone: '', address: '' });
   const [session, setSession] = useState(null);
-  const [heroProducts, setHeroProducts] = useState(() => heroCatalogue.slice(0, 3));
+  const [heroScene, setHeroScene] = useState(heroScenes[0]);
+  const [heroProducts, setHeroProducts] = useState(() => products.filter(product => product.category === heroScenes[0].category).slice(0, 3));
   const cartReady = useRef(false);
 
   useEffect(() => {
@@ -36,15 +42,17 @@ export default function Home() {
   useEffect(() => { if (cartReady.current) window.localStorage.setItem('deli-cart', JSON.stringify(cart)); }, [cart]);
 
   useEffect(() => {
-    const chooseThree = () => {
-      const shuffled = [...heroCatalogue];
+    const chooseScene = () => {
+      const scene = heroScenes[Math.floor(Math.random() * heroScenes.length)];
+      const shuffled = products.filter(product => product.category === scene.category);
       for (let index = shuffled.length - 1; index > 0; index--) {
         const swapWith = Math.floor(Math.random() * (index + 1));
         [shuffled[index], shuffled[swapWith]] = [shuffled[swapWith], shuffled[index]];
       }
+      setHeroScene(scene);
       setHeroProducts(shuffled.slice(0, 3));
     };
-    chooseThree();
+    chooseScene();
   }, []);
 
   const shown = useMemo(() => category === 'all' ? products : products.filter(p => p.category === category), [category]);
@@ -108,23 +116,26 @@ export default function Home() {
         <p>Dél-Afrika karakteres ízei hozzád közelebb. Válogatott braai szószok, chutney-k, rooibos teák, fűszerek és kultikus snackek.</p>
         <a className="button button-red" href="#shop">Fedezd fel</a>
       </div>
-      <div className="hero-stage">
+      <div className={`hero-stage hero-category-${heroScene.category}`} style={{ backgroundImage: `url(${heroScene.image})` }}>
         <div className="sun-disc">FROM<br/>CAPE<br/>TO<br/>YOU</div>
-        {heroProducts.map((product, index) => <ProductVisual product={product} large className={`hero-product hero-product-${index + 1}`} key={product.id}/>)}
+        {heroProducts.map((product, index) => <ProductVisual product={product} large className={`hero-product hero-count-${heroProducts.length} hero-product-${index + 1}`} key={product.id}/>)}
         <div className="spice-sweep">peri · coriander · rooibos · smoke</div>
       </div>
     </section>
 
-    <section className="trust-strip" id="why">
-      <div><b>Valódi dél-afrikai kedvencek.</b><span>Jellegzetes ízek egyenesen a dél-afrikai kamrából.</span></div>
-      <div><b>Könnyű választani.</b><span>Minden terméknél elmondjuk, milyen és mire használd.</span></div>
-      <div><b>Egyszerűen élvezhető.</b><span>Gyors tálalási ötletek reggelihez, vacsorához és braaihoz.</span></div>
-      <div><b>Ajándéknak is öröm.</b><span>Különleges ízek, amelyekről lesz mit mesélni.</span></div>
+    <section className="story-block" id="story">
+      <div><span className="eyebrow dark">A DELI.AFRICA TÖRTÉNETE</span><h2>Dél-afrikai ízek, érthetően és könnyen kipróbálhatóan.</h2></div>
+      <div className="story-copy"><p>A deli.africa azért született, hogy a dél-afrikai kamra karakteres kedvencei ne csak különlegességek legyenek, hanem a hétköznapi étkezések részei is. A válogatásban a füstös braai, a citrusos peri-peri, a rooibos és az otthonos snackek világa találkozik.</p><p>Nem feltételezzük, hogy már ismered őket: minden terméknél megmutatjuk az ízprofilt, a legjobb párosításokat és egy egyszerű első kóstolási ötletet. Így magabiztosan választhatsz magadnak vagy ajándékba.</p><a className="story-link" href="#shop">Megnézem a válogatást →</a></div>
     </section>
 
-    <section className="story-block" id="story">
-      <div><span className="eyebrow dark">DÉL-AFRIKA, NEKED VÁLOGATVA.</span><h2>Találd meg az új kedvenc ízed.</h2></div>
-      <p>Csípős peri-peri a következő grillezéshez, lágy rooibos az esti pihenéshez vagy valami igazán különleges az ajándékcsomagba? Minden terméknél röviden megmutatjuk, milyen ízre számíts, mivel párosítsd és hogyan érdemes először megkóstolni.</p>
+    <section className="why-block" id="why">
+      <div className="why-heading"><span className="eyebrow">MIÉRT DELI.AFRICA?</span><h2>Kevesebb találgatás.<br/>Több jó falat.</h2><p>Olyan válogatást építünk, amelyben gyorsan megtalálod az alkalomhoz és az ízlésedhez illő terméket.</p></div>
+      <div className="why-grid">
+        <article><b>01</b><h3>13 átlátható választás</h3><p>Szűk, gondosan bemutatott kínálat: nem kell több száz hasonló terméket végignézned.</p></article>
+        <article><b>02</b><h3>Íz alapján dönthetsz</h3><p>Minden oldalon konkrét ízjegyeket, felhasználási módokat és párosításokat találsz.</p></article>
+        <article><b>03</b><h3>Konyhakész ötletek</h3><p>Megmutatjuk, mit tegyél a grillre, a reggeli mellé, a teáscsészébe vagy az ajándékcsomagba.</p></article>
+        <article><b>04</b><h3>Őszinte termékinformáció</h3><p>Ahol egy adat vagy ár még nem végleges, azt egyértelműen jelezzük; a csomagolás marad az irányadó.</p></article>
+      </div>
     </section>
 
     <section className="shop" id="shop">

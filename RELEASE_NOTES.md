@@ -1,6 +1,8 @@
-# Release Notes — v0.4.0
+# Release Notes — v0.5.0
 
 ## ✅ New Features
+- Expanded the homepage story and value proposition into substantive, buyer-focused sections with clear product-selection guidance
+- Added five category-specific editorial hero environments with relevant food and serving props
 - Added six dedicated category collection pages with readable `/categories/...` URLs, useful background, selection guidance and structured data
 - Enabled real add-to-basket actions directly on purchasable product pages
 - Complete deli.africa storefront MVP
@@ -25,6 +27,9 @@
 - Commercially reusable Pexels food photography on product guides, with source credits
 
 ## ✅ Fixed Bugs
+- Recognised Vercel's integration-prefixed `deli_MONGODB_URI` as well as the standard `MONGODB_URI`, so the live dashboard can use the attached database
+- Changed the random hero from unrelated products to one coherent category per page load
+- Normalised hero scale by package type so bottles, tins, boxes and bags read in believable proportion
 - Rewrote ambiguous biltong serving suggestions with concrete foods and usage instructions
 - Centred and enlarged product imagery in modals and dedicated product heroes
 - Paired card logos with contrast-safe variants for every category background
@@ -51,7 +56,7 @@
 - Prices are still awaiting confirmation for nine of the 13 products; these are visibly marked and cannot be ordered
 - Payment processing is intentionally not implemented in this MVP
 - Persistent Socket.io connections depend on Vercel websocket runtime behaviour; the endpoint is prepared but the current shop does not require live events to complete a purchase
-- Orders are non-persistent until `MONGODB_URI` is configured in Vercel
+- Orders are non-persistent until `MONGODB_URI` or `deli_MONGODB_URI` is configured in Vercel
 - SSO login requires the OAuth client ID and secret to be configured in Vercel
 
 ## ✅ Future Roadmap

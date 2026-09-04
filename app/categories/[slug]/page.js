@@ -6,6 +6,7 @@ import { categories, products, formatPrice } from '@/lib/products';
 import { APP_VERSION } from '@/lib/version';
 
 const siteUrl = 'https://deli.doneisbetter.com';
+const heroScenes = { braai: '/hero-scenes/braai.webp', spices: '/hero-scenes/spices.webp', pate: '/hero-scenes/pate.webp', tea: '/hero-scenes/tea.webp', snacks: '/hero-scenes/snacks.webp', pantry: '/hero-scenes/pantry.webp' };
 const copy = {
   braai: { title: 'Braai szószok dél-afrikai grillezéshez', lead: 'Peri-peri szószok és karakteres ízek húsokhoz, zöldségekhez, pácokhoz és mártogatósokhoz.', context: 'A braai több egyszerű grillezésnél: közös étkezés, tűz és együtt töltött idő. Ebben a válogatásban olyan szószokat találsz, amelyek gyorsan adnak savasságot, chilit és fűszeres mélységet a kész fogásokhoz.', tip: 'Kezdd kevés szósszal, majd kóstolás után rétegezd tovább az ízt.' },
   spices: { title: 'Fűszerek és rubok a hétköznapi főzéstől a braaiig', lead: 'Száraz keverékek curryhez, grillezéshez, sült zöldségekhez és gyors pácokhoz.', context: 'Az őrölt currykeverékek és rubok egyszerű módon adnak összetett, meleg vagy csípős karaktert. Használhatod őket közvetlenül az alapanyagon, olajjal elkeverve vagy a főzés elején hagymával röviden megpirítva.', tip: 'Első használatkor adagolj visszafogottan; a fűszer intenzitása főzés közben erősödhet.' },
@@ -40,7 +41,7 @@ export default async function CategoryPage({ params }) {
     {schemas.map((schema, index) => <script key={index} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }} />)}
     <header className="site-header product-header"><Link href="/" className="brand-link"><BrandLogo /></Link><nav><Link href="/#shop">Shop</Link><Link href="/#story">Történet</Link></nav><Link className="button button-dark" href="/#shop">Összes termék</Link></header>
     <div className="product-breadcrumb"><Link href="/">Kezdőlap</Link><span>/</span><span>{category.label}</span></div>
-    <section className="category-hero"><div><span className="eyebrow">VÁLOGATÁS · {items.length} TERMÉK</span><h1>{data.title}</h1><p>{data.lead}</p></div><ProductVisual product={items[0]} large /></section>
+    <section className="category-hero"><div><span className="eyebrow">VÁLOGATÁS · {items.length} TERMÉK</span><h1>{data.title}</h1><p>{data.lead}</p></div><div className="category-hero-art" style={{ backgroundImage: `url(${heroScenes[slug]})` }}><ProductVisual product={items[0]} large /></div></section>
     <section className="category-story"><div><span className="eyebrow dark">MIÉRT ÉRDEMES MEGKÓSTOLNI?</span><h2>Ízek, amelyekhez rögtön van ötleted.</h2></div><div><p>{data.context}</p><strong>{data.tip}</strong></div></section>
     <section className="category-products"><span className="eyebrow dark">A KATEGÓRIA TERMÉKEI</span><h2>Válassz kedved szerint.</h2><div>{items.map((item) => <Link href={`/products/${item.slug}`} key={item.id}><ProductVisual product={item}/><small>{item.subtitle}</small><h3>{item.name}</h3><p>{item.details.summary}</p><b>{formatPrice(item.price)}</b><span>Részletek →</span></Link>)}</div></section>
     <footer><BrandLogo inverse /><p>Budapest · Hungary<br />deli.africa v{APP_VERSION}</p><div><Link href="/#shop">Shop</Link></div></footer>
