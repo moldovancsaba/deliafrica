@@ -4,12 +4,12 @@ import { notFound } from 'next/navigation';
 import BrandLogo from '@/app/components/BrandLogo';
 import ProductVisual from '@/app/components/ProductVisual';
 import AddToCartButton from '@/app/components/AddToCartButton';
-import { formatPrice, getProductBySlug, products } from '@/lib/products';
+import { formatPrice, getProductBySlug } from '@/lib/products';
+import { getProductsWithSettings } from '@/lib/product-catalog';
 import { APP_VERSION } from '@/lib/version';
 
 const siteUrl = 'https://deli.doneisbetter.com';
-
-export function generateStaticParams() { return products.map(({ slug }) => ({ slug })); }
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }) {
   const item = getProductBySlug((await params).slug);
@@ -19,9 +19,11 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function ProductPage({ params }) {
-  const item = getProductBySlug((await params).slug);
+  const catalog = await getProductsWithSettings();
+  const { slug } = await params;
+  const item = catalog.find((product) => product.slug === slug);
   if (!item) notFound();
-  const related = products.filter((candidate) => candidate.category === item.category && candidate.id !== item.id).slice(0, 3);
+  const related = catalog.filter((candidate) => candidate.category === item.category && candidate.id !== item.id).slice(0, 3);
   const productSchema = { '@context': 'https://schema.org', '@type': 'Product', name: item.name, image: `${siteUrl}${item.image}`, description: item.details.summary, sku: item.id, category: item.categoryName, url: `${siteUrl}/products/${item.slug}` };
   if (item.price != null) productSchema.offers = { '@type': 'Offer', priceCurrency: 'HUF', price: item.price, availability: 'https://schema.org/InStock', url: `${siteUrl}/products/${item.slug}` };
   const schemas = [

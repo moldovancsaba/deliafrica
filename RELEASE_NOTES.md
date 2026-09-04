@@ -1,6 +1,7 @@
-# Release Notes — v0.5.0
+# Release Notes — v0.6.0
 
 ## ✅ New Features
+- Added admin-managed product width and height settings, persisted in MongoDB and consumed by storefront hero scaling
 - Added direct, persistent basket actions to every purchasable product on all six category landing pages
 - Expanded the homepage story and value proposition into substantive, buyer-focused sections with clear product-selection guidance
 - Added five category-specific editorial hero environments with relevant food and serving props
@@ -28,6 +29,8 @@
 - Commercially reusable Pexels food photography on product guides, with source credits
 
 ## ✅ Fixed Bugs
+- Closed the basket drawer before checkout opens so purchase layers never overlap
+- Removed the CSS drop-shadow that rendered the transparent image canvas as a visible rectangular haze
 - Removed excessive hero-scene zoom and restored proportional `cover` scaling with minimum cropping
 - Removed aspect-ratio-distorting hero background sizing and replaced unsupported CSS dimension multiplication in the single-product presentation
 - Simplified the homepage hero to one stable, category-related product per page load

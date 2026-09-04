@@ -50,3 +50,6 @@
 
 /* Preserve the scene at its natural proportions with only the minimum cover crop. */
 .hero-stage{background-size:cover;background-position:center center}@media(max-width:1000px){.hero-stage{background-size:cover;background-position:center center}}@media(max-width:650px){.hero-stage{background-size:cover;background-position:center center}}
+
+/* Product PNG/WebP alpha must remain clean; shadows on the full image canvas create rectangular haze. */
+.product-photo,.hero-stage .product-photo,.detail-modal .product-photo,.product-page .product-photo,.category-hero-art .product-photo{filter:none!important}.hero-stage{background-size:cover;background-position:center center}

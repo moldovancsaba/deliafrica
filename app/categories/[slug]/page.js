@@ -3,10 +3,12 @@ import { notFound } from 'next/navigation';
 import BrandLogo from '@/app/components/BrandLogo';
 import ProductVisual from '@/app/components/ProductVisual';
 import AddToCartButton from '@/app/components/AddToCartButton';
-import { categories, products, formatPrice } from '@/lib/products';
+import { categories, formatPrice } from '@/lib/products';
+import { getProductsWithSettings } from '@/lib/product-catalog';
 import { APP_VERSION } from '@/lib/version';
 
 const siteUrl = 'https://deli.doneisbetter.com';
+export const dynamic = 'force-dynamic';
 const heroScenes = { braai: '/hero-scenes/braai.webp', spices: '/hero-scenes/spices.webp', pate: '/hero-scenes/pate.webp', tea: '/hero-scenes/tea.webp', snacks: '/hero-scenes/snacks.webp', pantry: '/hero-scenes/pantry.webp' };
 const copy = {
   braai: { title: 'Braai szószok dél-afrikai grillezéshez', lead: 'Peri-peri szószok és karakteres ízek húsokhoz, zöldségekhez, pácokhoz és mártogatósokhoz.', context: 'A braai több egyszerű grillezésnél: közös étkezés, tűz és együtt töltött idő. Ebben a válogatásban olyan szószokat találsz, amelyek gyorsan adnak savasságot, chilit és fűszeres mélységet a kész fogásokhoz.', tip: 'Kezdd kevés szósszal, majd kóstolás után rétegezd tovább az ízt.' },
@@ -17,8 +19,6 @@ const copy = {
   pantry: { title: 'Kamra-alapok dél-afrikai ihletéssel', lead: 'Sokoldalú alapanyagok salátához, kenyérhez, grillezéshez és gyors hétköznapi fogásokhoz.', context: 'Egy jó kamra-alap nem uralja az ételt, hanem összeköti az ízeket. A válogatás termékei többféle fogásban használhatók, a legegyszerűbb tálalástól a braai köretekig.', tip: 'Tárold a csomagolás szerint, hőtől és közvetlen napfénytől védve.' }
 };
 
-export function generateStaticParams() { return categories.filter(({ id }) => id !== 'all').map(({ id }) => ({ slug: id })); }
-
 export async function generateMetadata({ params }) {
   const slug = (await params).slug;
   const data = copy[slug];
@@ -27,11 +27,12 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function CategoryPage({ params }) {
+  const catalog = await getProductsWithSettings();
   const slug = (await params).slug;
   const category = categories.find((item) => item.id === slug);
   const data = copy[slug];
   if (!category || !data) notFound();
-  const items = products.filter((product) => product.category === slug);
+  const items = catalog.filter((product) => product.category === slug);
   const schemas = [
     { '@context': 'https://schema.org', '@type': 'CollectionPage', name: data.title, description: data.lead, url: `${siteUrl}/categories/${slug}` },
     { '@context': 'https://schema.org', '@type': 'ItemList', itemListElement: items.map((item, index) => ({ '@type': 'ListItem', position: index + 1, url: `${siteUrl}/products/${item.slug}`, name: item.name })) },

@@ -17,6 +17,7 @@ const heroScenes = [
 ];
 
 export default function Home() {
+  const [catalog, setCatalog] = useState(products);
   const [category, setCategory] = useState('all');
   const [cart, setCart] = useState({});
   const [cartOpen, setCartOpen] = useState(false);
@@ -37,6 +38,12 @@ export default function Home() {
       setSession(data);
       if (data.authenticated) setForm((current) => ({ ...current, customerName: data.user.name || current.customerName, email: data.user.email || current.email }));
     }).catch(() => setSession({ authenticated: false }));
+    fetch('/api/product-settings', { cache: 'no-store' }).then((res) => res.json()).then((data) => {
+      const settings = new Map((data.products || []).map((item) => [item.id, item]));
+      const applyDimensions = (product) => { const saved = settings.get(product.id); return saved ? { ...product, packageDimensionsMm: { width: saved.width, height: saved.height } } : product; };
+      setCatalog((current) => current.map(applyDimensions));
+      setHeroProducts((current) => current.map(applyDimensions));
+    }).catch(() => {});
   }, []);
 
   useEffect(() => { if (cartReady.current) window.localStorage.setItem('deli-cart', JSON.stringify(cart)); }, [cart]);
@@ -55,8 +62,8 @@ export default function Home() {
     chooseScene();
   }, []);
 
-  const shown = useMemo(() => category === 'all' ? products : products.filter(p => p.category === category), [category]);
-  const cartRows = Object.entries(cart).map(([id, quantity]) => ({ product: products.find(p => p.id === id), quantity })).filter(r => r.product);
+  const shown = useMemo(() => category === 'all' ? catalog : catalog.filter(p => p.category === category), [category, catalog]);
+  const cartRows = Object.entries(cart).map(([id, quantity]) => ({ product: catalog.find(p => p.id === id), quantity })).filter(r => r.product);
   const cartCount = cartRows.reduce((s, r) => s + r.quantity, 0);
   const total = cartRows.reduce((s, r) => s + (r.product.price || 0) * r.quantity, 0);
 
@@ -91,6 +98,7 @@ export default function Home() {
 
   function beginCheckout() {
     if (session?.configured === false) {
+      setCartOpen(false);
       setCheckout(true);
       return;
     }
@@ -99,6 +107,7 @@ export default function Home() {
       window.location.assign('/api/auth/login?returnTo=%2F%23shop');
       return;
     }
+    setCartOpen(false);
     setCheckout(true);
   }
 
