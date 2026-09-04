@@ -45,8 +45,6 @@ export default function Home() {
       setHeroProducts(shuffled.slice(0, 3));
     };
     chooseThree();
-    const timer = window.setInterval(chooseThree, 8000);
-    return () => window.clearInterval(timer);
   }, []);
 
   const shown = useMemo(() => category === 'all' ? products : products.filter(p => p.category === category), [category]);
@@ -99,7 +97,7 @@ export default function Home() {
   return <main>
     <header className="site-header">
       <a href="#top" className="brand-link" aria-label="deli.africa kezdőlap"><BrandLogo /></a>
-      <nav><a href="#shop">Shop</a><a href="#story">Történet</a><a href="#why">Miért mi?</a><Link href="/dashboard">Dashboard</Link></nav>
+      <nav><a href="#shop">Shop</a><a href="#story">Történet</a><a href="#why">Miért mi?</a>{session?.permission?.status === 'approved' && session?.permission?.role === 'admin' && <Link href="/dashboard">Dashboard</Link>}</nav>
       <div className="header-actions">{session?.authenticated ? <a className="account-link" href="/api/auth/logout" title="Kijelentkezés">{session.user.name}</a> : <a className="account-link" href="/api/auth/login?returnTo=%2F%23shop">Belépés</a>}<button className="cart-button" onClick={() => setCartOpen(true)}>Kosár <span>{cartCount}</span></button></div>
     </header>
 
@@ -131,9 +129,9 @@ export default function Home() {
 
     <section className="shop" id="shop">
       <div className="section-head"><div><span className="eyebrow dark">SHOP THE COLLECTION</span><h2>Mit kóstolnál meg?</h2></div><button className={`category-reset ${category === 'all' ? 'active' : ''}`} onClick={() => setCategory('all')}>Minden termék</button></div>
-      <div className="category-selector" aria-label="Termékkategóriák">{categories.filter(c => c.id !== 'all').map(c => <button className={`category-tile ${c.tone} ${category === c.id ? 'active' : ''}`} key={c.id} onClick={() => setCategory(c.id)} aria-pressed={category === c.id}><span>{c.visualLabel.map(line => <b key={line}>{line}</b>)}</span><Image src={c.image} alt="" fill sizes="(max-width: 650px) 62vw, 17vw" /></button>)}</div>
+      <div className="category-selector" aria-label="Termékkategóriák">{categories.filter(c => c.id !== 'all').map(c => <div className={`category-tile ${c.tone} ${category === c.id ? 'active' : ''}`} key={c.id}><button onClick={() => setCategory(c.id)} aria-pressed={category === c.id}><span>{c.visualLabel.map(line => <b key={line}>{line}</b>)}</span><Image src={c.image} alt="" fill sizes="(max-width: 650px) 62vw, 17vw" /></button><Link href={`/categories/${c.id}`}>Kategória bemutatása →</Link></div>)}</div>
       <div className="product-grid">{shown.map(product => <article className="product-card" key={product.id}>
-        <button className="visual-button" onClick={() => setDetail(product)}><ProductVisual product={product}/><span className="badge">{product.badge}</span></button>
+        <button className={`visual-button tone-${product.tone}`} onClick={() => setDetail(product)}><ProductVisual product={product}/><span className="badge">{product.badge}</span></button>
         <div className="product-info"><small>{product.subtitle}</small><h3>{product.name}</h3><p>{product.story}</p><div className="product-bottom"><strong>{formatPrice(product.price)}</strong><button disabled={product.price == null} onClick={() => add(product.id)} aria-label={`${product.name} kosárba`}>{product.price == null ? '–' : '+'}</button></div></div>
       </article>)}</div>
     </section>
@@ -148,7 +146,7 @@ export default function Home() {
     <footer>
       <BrandLogo inverse />
       <p>Budapest · Hungary<br/>deli.africa v{APP_VERSION}</p>
-      <div><a href="#shop">Shop</a><Link href="/dashboard">System dashboard</Link></div>
+      <div><a href="#shop">Shop</a></div>
     </footer>
 
     {detail && <div className="modal-backdrop" onClick={() => setDetail(null)}><div className={`detail-modal category-${detail.category}`} onClick={e => e.stopPropagation()}>

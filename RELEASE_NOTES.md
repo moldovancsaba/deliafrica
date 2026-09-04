@@ -1,6 +1,8 @@
-# Release Notes — v0.3.0
+# Release Notes — v0.4.0
 
 ## ✅ New Features
+- Added six dedicated category collection pages with readable `/categories/...` URLs, useful background, selection guidance and structured data
+- Enabled real add-to-basket actions directly on purchasable product pages
 - Complete deli.africa storefront MVP
 - Editorial homepage based on the provided brand board
 - Product categories, product detail view and curated catalogue
@@ -23,6 +25,13 @@
 - Commercially reusable Pexels food photography on product guides, with source credits
 
 ## ✅ Fixed Bugs
+- Rewrote ambiguous biltong serving suggestions with concrete foods and usage instructions
+- Centred and enlarged product imagery in modals and dedicated product heroes
+- Paired card logos with contrast-safe variants for every category background
+- Connected product breadcrumbs to real category destinations
+- Kept the random hero trio stable for the full page visit instead of rotating while customers read
+- Centred category-selector product images on both axes
+- Hid dashboard navigation from shoppers; it appears only for approved SSO administrators
 - No known application crashes in the initial release
 - Checkout sanitises catalogue pricing server-side instead of trusting client totals
 - MongoDB connection failures fall back safely instead of crashing the storefront
