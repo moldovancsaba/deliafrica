@@ -22,7 +22,7 @@ A production-oriented Next.js webshop MVP inspired by the deli.africa visual ide
 
 ## Environment
 
-Set `MONGODB_URI` in Vercel to enable persistent orders.
+Set `MONGODB_URI` in Vercel to enable persistent orders. After adding or changing production environment variables, trigger a new production deployment so the runtime receives the updated values.
 
 ## Local
 
