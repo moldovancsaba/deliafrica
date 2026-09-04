@@ -1,4 +1,5 @@
 import './globals.css';
+import './card-branding.css';
 
 export const metadata = {
   title: 'deli.africa — Dél-Afrika, válogatva',
