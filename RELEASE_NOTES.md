@@ -1,4 +1,4 @@
-# Release Notes — v0.6.1
+# Release Notes — v0.6.2
 
 ## ✅ New Features
 - Replaced all 13 catalogue, modal, basket and product-page visuals with the client-supplied Shopify-ready 1:1 editorial photographs
@@ -31,6 +31,8 @@
 - Commercially reusable Pexels food photography on product guides, with source credits
 
 ## ✅ Fixed Bugs
+- Re-encoded catalogue photography at a web-safe 1024 × 1024 resolution to eliminate partial grey/corrupt rendering in production
+- Locked the modal media panel to the source image's square aspect ratio instead of stretching it to the copy height
 - Enforced undistorted square image framing across the homepage and category product grids
 - Removed padding and image effects from the finished Shopify compositions while preserving dedicated hero packshot treatment
 - Closed the basket drawer before checkout opens so purchase layers never overlap

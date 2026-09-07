@@ -57,6 +57,8 @@
 /* The approved Shopify photographs are complete 1:1 compositions, not cutouts. */
 .product-photo-shop{object-fit:cover!important;object-position:center!important;padding:0!important;filter:none!important}
 .visual-button .product-visual,.category-product-link>.product-visual{height:auto!important;aspect-ratio:1/1}
-.detail-modal>.product-visual.large,.product-hero-art .product-visual.large{width:100%;height:auto;aspect-ratio:1/1;min-height:0;overflow:hidden}
+.detail-modal{width:min(1100px,95vw);grid-template-columns:1fr 1fr;align-items:center}
+.detail-modal>.product-visual.large,.product-hero-art .product-visual.large{width:100%;height:auto!important;aspect-ratio:1/1;min-height:0!important;align-self:center;overflow:hidden}
 .detail-modal>.product-visual.large .product-photo-shop,.product-hero-art .product-photo-shop{padding:0!important;object-fit:cover!important}
 .cart-line .product-photo-shop{padding:0!important;object-fit:cover!important}
+@media(max-width:650px){.detail-modal{width:min(520px,95vw);grid-template-columns:1fr;align-items:start}.detail-modal>.product-visual.large{height:auto!important;min-height:0!important;aspect-ratio:1/1}}
