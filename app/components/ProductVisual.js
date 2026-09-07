@@ -1,8 +1,9 @@
 import Image from 'next/image';
 
-export default function ProductVisual({ product, large = false, className = '' }) {
+export default function ProductVisual({ product, large = false, className = '', hero = false }) {
   const physicalStyle = product.packageDimensionsMm ? { '--package-width': product.packageDimensionsMm.width, '--package-height': product.packageDimensionsMm.height } : undefined;
+  const image = hero ? product.heroImage || product.image : product.image;
   return <div style={physicalStyle} className={`product-visual product-${product.id} ${product.tone} ${large ? 'large' : ''} ${className}`}>
-    {product.image ? <Image className="product-photo" src={product.image} alt={`${product.name} termékcsomagolás`} fill sizes={large ? '(max-width: 650px) 30vw, 180px' : '(max-width: 650px) 80vw, 25vw'} /> : <span className={`pack ${product.visual}`}><i>{product.name.split(' ')[0]}</i><b>deli.</b><small>south africa</small></span>}
+    {image ? <Image className={`product-photo ${hero ? 'product-photo-cutout' : 'product-photo-shop'}`} src={image} alt={`${product.name} termékfotó`} fill sizes={large ? '(max-width: 650px) 100vw, 50vw' : '(max-width: 650px) 100vw, 25vw'} /> : <span className={`pack ${product.visual}`}><i>{product.name.split(' ')[0]}</i><b>deli.</b><small>south africa</small></span>}
   </div>;
 }

@@ -53,3 +53,10 @@
 
 /* Product PNG/WebP alpha must remain clean; shadows on the full image canvas create rectangular haze. */
 .product-photo,.hero-stage .product-photo,.detail-modal .product-photo,.product-page .product-photo,.category-hero-art .product-photo{filter:none!important}.hero-stage{background-size:cover;background-position:center center}
+
+/* The approved Shopify photographs are complete 1:1 compositions, not cutouts. */
+.product-photo-shop{object-fit:cover!important;object-position:center!important;padding:0!important;filter:none!important}
+.visual-button .product-visual,.category-product-link>.product-visual{height:auto!important;aspect-ratio:1/1}
+.detail-modal>.product-visual.large,.product-hero-art .product-visual.large{width:100%;height:auto;aspect-ratio:1/1;min-height:0;overflow:hidden}
+.detail-modal>.product-visual.large .product-photo-shop,.product-hero-art .product-photo-shop{padding:0!important;object-fit:cover!important}
+.cart-line .product-photo-shop{padding:0!important;object-fit:cover!important}

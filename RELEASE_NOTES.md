@@ -1,6 +1,8 @@
-# Release Notes — v0.6.0
+# Release Notes — v0.6.1
 
 ## ✅ New Features
+- Replaced all 13 catalogue, modal, basket and product-page visuals with the client-supplied Shopify-ready 1:1 editorial photographs
+- Added separate catalogue and hero image roles so finished square photography is never treated as a transparent packshot
 - Added admin-managed product width and height settings, persisted in MongoDB and consumed by storefront hero scaling
 - Added direct, persistent basket actions to every purchasable product on all six category landing pages
 - Expanded the homepage story and value proposition into substantive, buyer-focused sections with clear product-selection guidance
@@ -29,6 +31,8 @@
 - Commercially reusable Pexels food photography on product guides, with source credits
 
 ## ✅ Fixed Bugs
+- Enforced undistorted square image framing across the homepage and category product grids
+- Removed padding and image effects from the finished Shopify compositions while preserving dedicated hero packshot treatment
 - Closed the basket drawer before checkout opens so purchase layers never overlap
 - Removed the CSS drop-shadow that rendered the transparent image canvas as a visible rectangular haze
 - Removed excessive hero-scene zoom and restored proportional `cover` scaling with minimum cropping
