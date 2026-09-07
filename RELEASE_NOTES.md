@@ -1,6 +1,7 @@
-# Release Notes — v0.7.0
+# Release Notes — v0.7.1
 
 ## ✅ New Features
+- Added automatic rotation through the six category hero photographs on the homepage
 - Added all 11 client-supplied fixed hero compositions and made fixed photography the storefront default
 - Added an admin hero switch between fixed client photography and the generated interactive presentation
 - Applied the selected hero presentation consistently to the homepage, category pages and product pages
@@ -35,6 +36,8 @@
 - Commercially reusable Pexels food photography on product guides, with source credits
 
 ## ✅ Fixed Bugs
+- Fixed supplied hero photographs to preserve their natural aspect ratio, match the hero height and stay right-aligned
+- Restored exact product photography on product pages so category editorial imagery can never misrepresent a product
 - Product detail hero images now run edge-to-edge on mobile so the category colour background no longer appears as side gutters
 - Removed the reconstructed SVG marks so headers, footers, product cards and editorial tiles use only official brand artwork
 - Re-encoded catalogue photography at a web-safe 1024 × 1024 resolution to eliminate partial grey/corrupt rendering in production

@@ -7,7 +7,7 @@ import { categories, products, formatPrice } from '@/lib/products';
 import ProductVisual from '@/app/components/ProductVisual';
 import BrandLogo from '@/app/components/BrandLogo';
 import { APP_VERSION } from '@/lib/version';
-import { DEFAULT_HERO_MODE, homepageFixedHero } from '@/lib/hero-config';
+import { DEFAULT_HERO_MODE, homepageFixedHeroes } from '@/lib/hero-config';
 
 const heroScenes = [
   { category: 'braai', image: '/hero-scenes/braai.webp' },
@@ -30,6 +30,7 @@ export default function Home() {
   const [heroScene, setHeroScene] = useState(heroScenes[0]);
   const [heroProducts, setHeroProducts] = useState(() => products.filter(product => product.category === heroScenes[0].category).slice(0, 1));
   const [heroMode, setHeroMode] = useState(DEFAULT_HERO_MODE);
+  const [fixedHeroIndex, setFixedHeroIndex] = useState(0);
   const cartReady = useRef(false);
 
   useEffect(() => {
@@ -48,6 +49,14 @@ export default function Home() {
     }).catch(() => {});
     fetch('/api/site-settings', { cache: 'no-store' }).then((res) => res.json()).then((data) => setHeroMode(data.heroMode || DEFAULT_HERO_MODE)).catch(() => {});
   }, []);
+
+  useEffect(() => {
+    if (heroMode !== 'fixed' || homepageFixedHeroes.length < 2) return undefined;
+    const rotation = window.setInterval(() => {
+      setFixedHeroIndex((current) => (current + 1) % homepageFixedHeroes.length);
+    }, 7000);
+    return () => window.clearInterval(rotation);
+  }, [heroMode]);
 
   useEffect(() => { if (cartReady.current) window.localStorage.setItem('deli-cart', JSON.stringify(cart)); }, [cart]);
 
@@ -122,7 +131,7 @@ export default function Home() {
     </header>
 
     <section className={`hero hero-mode-${heroMode}`} id="top">
-      {heroMode === 'fixed' && <Image className="fixed-hero-image" src={homepageFixedHero} alt="Nando's peri-peri szósz dél-afrikai tálalási környezetben" fill priority sizes="100vw" />}
+      {heroMode === 'fixed' && <Image key={homepageFixedHeroes[fixedHeroIndex]} className="fixed-hero-image fixed-hero-image-rotating" src={homepageFixedHeroes[fixedHeroIndex]} alt="Dél-afrikai termék tálalási környezetben" fill priority={fixedHeroIndex === 0} sizes="100vw" />}
       <div className="hero-copy">
         <div className="eyebrow">DÉL-AFRIKAI KEDVENCEK. NEKED VÁLOGATVA.</div>
         <h1>TASTE<br/>SOUTH<br/>AFRICA.</h1>

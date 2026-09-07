@@ -7,8 +7,6 @@ import AddToCartButton from '@/app/components/AddToCartButton';
 import { formatPrice, getProductBySlug } from '@/lib/products';
 import { getProductsWithSettings } from '@/lib/product-catalog';
 import { APP_VERSION } from '@/lib/version';
-import { getFixedHeroForProduct } from '@/lib/hero-config';
-import { getHeroMode } from '@/lib/site-settings';
 
 const siteUrl = 'https://deli.doneisbetter.com';
 export const dynamic = 'force-dynamic';
@@ -21,7 +19,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function ProductPage({ params }) {
-  const [catalog, heroMode] = await Promise.all([getProductsWithSettings(), getHeroMode()]);
+  const catalog = await getProductsWithSettings();
   const { slug } = await params;
   const item = catalog.find((product) => product.slug === slug);
   if (!item) notFound();
@@ -38,7 +36,7 @@ export default async function ProductPage({ params }) {
     {schemas.map((schema, index) => <script key={index} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }} />)}
     <header className="site-header product-header"><Link href="/" className="brand-link" aria-label="deli.africa kezdőlap"><BrandLogo /></Link><nav><Link href="/#shop">Shop</Link><Link href="/#story">Történet</Link></nav><Link className="button button-dark" href="/#shop">Vissza a shophoz</Link></header>
     <div className="product-breadcrumb"><Link href="/">Kezdőlap</Link><span>/</span><Link href={`/categories/${item.category}`}>{item.categoryName}</Link><span>/</span><span>{item.name}</span></div>
-    <section className={`product-hero hero-mode-${heroMode}`}>{heroMode === 'fixed' && <Image className="fixed-hero-image" src={getFixedHeroForProduct(item)} alt={`${item.name} tálalási környezetben`} fill priority sizes="100vw" />}{heroMode === 'interactive' && <div className="product-hero-art"><ProductVisual product={item} large /></div>}<div className="product-hero-copy"><span className="badge inline">{item.badge}</span><p className="eyebrow dark">{item.categoryName}</p><h1>{item.name}</h1><p className="product-lead">{item.details.summary}</p><div className="product-buy"><strong>{formatPrice(item.price)}</strong>{item.price == null ? <button className="button button-muted" disabled>Hamarosan rendelhető</button> : <AddToCartButton productId={item.id} />}</div><p className="product-note">{item.details.info}</p></div></section>
+    <section className="product-hero"><div className="product-hero-art"><ProductVisual product={item} large /></div><div className="product-hero-copy"><span className="badge inline">{item.badge}</span><p className="eyebrow dark">{item.categoryName}</p><h1>{item.name}</h1><p className="product-lead">{item.details.summary}</p><div className="product-buy"><strong>{formatPrice(item.price)}</strong>{item.price == null ? <button className="button button-muted" disabled>Hamarosan rendelhető</button> : <AddToCartButton productId={item.id} />}</div><p className="product-note">{item.details.info}</p></div></section>
     <section className="product-content">
       <div className="product-intro"><span className="eyebrow dark">ELSŐ KÓSTOLÁS ELŐTT</span><h2>Minden, ami a jó választáshoz kell.</h2></div>
       <figure className="product-editorial"><Image src={item.editorialImage} alt={`${item.name} tálalási ötlet`} fill sizes="(max-width: 650px) 100vw, 88vw"/><figcaption>{item.editorialCaption}</figcaption></figure>
