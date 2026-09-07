@@ -1,6 +1,7 @@
-# Release Notes — v0.6.2
+# Release Notes — v0.6.3
 
 ## ✅ New Features
+- Installed the three client-supplied official deli.africa logo files and assigned them by surface contrast
 - Replaced all 13 catalogue, modal, basket and product-page visuals with the client-supplied Shopify-ready 1:1 editorial photographs
 - Added separate catalogue and hero image roles so finished square photography is never treated as a transparent packshot
 - Added admin-managed product width and height settings, persisted in MongoDB and consumed by storefront hero scaling
@@ -31,6 +32,7 @@
 - Commercially reusable Pexels food photography on product guides, with source credits
 
 ## ✅ Fixed Bugs
+- Removed the reconstructed SVG marks so headers, footers, product cards and editorial tiles use only official brand artwork
 - Re-encoded catalogue photography at a web-safe 1024 × 1024 resolution to eliminate partial grey/corrupt rendering in production
 - Locked the modal media panel to the source image's square aspect ratio instead of stretching it to the copy height
 - Enforced undistorted square image framing across the homepage and category product grids
