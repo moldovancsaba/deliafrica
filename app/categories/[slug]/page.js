@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import BrandLogo from '@/app/components/BrandLogo';
 import ProductVisual from '@/app/components/ProductVisual';
@@ -6,6 +7,8 @@ import AddToCartButton from '@/app/components/AddToCartButton';
 import { categories, formatPrice } from '@/lib/products';
 import { getProductsWithSettings } from '@/lib/product-catalog';
 import { APP_VERSION } from '@/lib/version';
+import { fixedHeroByCategory } from '@/lib/hero-config';
+import { getHeroMode } from '@/lib/site-settings';
 
 const siteUrl = 'https://deli.doneisbetter.com';
 export const dynamic = 'force-dynamic';
@@ -27,7 +30,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function CategoryPage({ params }) {
-  const catalog = await getProductsWithSettings();
+  const [catalog, heroMode] = await Promise.all([getProductsWithSettings(), getHeroMode()]);
   const slug = (await params).slug;
   const category = categories.find((item) => item.id === slug);
   const data = copy[slug];
@@ -43,7 +46,7 @@ export default async function CategoryPage({ params }) {
     {schemas.map((schema, index) => <script key={index} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }} />)}
     <header className="site-header product-header"><Link href="/" className="brand-link"><BrandLogo /></Link><nav><Link href="/#shop">Shop</Link><Link href="/#story">Történet</Link></nav><Link className="button button-dark" href="/#shop">Összes termék</Link></header>
     <div className="product-breadcrumb"><Link href="/">Kezdőlap</Link><span>/</span><span>{category.label}</span></div>
-    <section className="category-hero"><div><span className="eyebrow">VÁLOGATÁS · {items.length} TERMÉK</span><h1>{data.title}</h1><p>{data.lead}</p></div><div className="category-hero-art" style={{ backgroundImage: `url(${heroScenes[slug]})` }}><ProductVisual product={items[0]} hero large /></div></section>
+    <section className={`category-hero hero-mode-${heroMode}`}>{heroMode === 'fixed' && <Image className="fixed-hero-image" src={fixedHeroByCategory[slug]} alt={`${category.label} dél-afrikai tálalási környezetben`} fill priority sizes="100vw" />}<div className="category-hero-copy"><span className="eyebrow">VÁLOGATÁS · {items.length} TERMÉK</span><h1>{data.title}</h1><p>{data.lead}</p></div>{heroMode === 'interactive' && <div className="category-hero-art" style={{ backgroundImage: `url(${heroScenes[slug]})` }}><ProductVisual product={items[0]} hero large /></div>}</section>
     <section className="category-story"><div><span className="eyebrow dark">MIÉRT ÉRDEMES MEGKÓSTOLNI?</span><h2>Ízek, amelyekhez rögtön van ötleted.</h2></div><div><p>{data.context}</p><strong>{data.tip}</strong></div></section>
     <section className="category-products"><span className="eyebrow dark">A KATEGÓRIA TERMÉKEI</span><h2>Válassz kedved szerint.</h2><div>{items.map((item) => <article className="category-product-card" key={item.id}><Link className="category-product-link" href={`/products/${item.slug}`}><ProductVisual product={item}/><small>{item.subtitle}</small><h3>{item.name}</h3><p>{item.details.summary}</p></Link><div className="category-product-actions"><b>{formatPrice(item.price)}</b>{item.price == null ? <button className="button button-muted" disabled>Hamarosan</button> : <AddToCartButton productId={item.id} />}</div><Link className="category-detail-link" href={`/products/${item.slug}`}>Részletek és tálalási ötletek →</Link></article>)}</div></section>
     <footer><BrandLogo inverse /><p>Budapest · Hungary<br />deli.africa v{APP_VERSION}</p><div><Link href="/#shop">Shop</Link></div></footer>

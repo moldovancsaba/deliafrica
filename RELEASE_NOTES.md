@@ -1,6 +1,9 @@
-# Release Notes — v0.6.3
+# Release Notes — v0.7.0
 
 ## ✅ New Features
+- Added all 11 client-supplied fixed hero compositions and made fixed photography the storefront default
+- Added an admin hero switch between fixed client photography and the generated interactive presentation
+- Applied the selected hero presentation consistently to the homepage, category pages and product pages
 - Installed the three client-supplied official deli.africa logo files and assigned them by surface contrast
 - Replaced all 13 catalogue, modal, basket and product-page visuals with the client-supplied Shopify-ready 1:1 editorial photographs
 - Added separate catalogue and hero image roles so finished square photography is never treated as a transparent packshot

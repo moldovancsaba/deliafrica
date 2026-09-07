@@ -7,6 +7,7 @@ import { categories, products, formatPrice } from '@/lib/products';
 import ProductVisual from '@/app/components/ProductVisual';
 import BrandLogo from '@/app/components/BrandLogo';
 import { APP_VERSION } from '@/lib/version';
+import { DEFAULT_HERO_MODE, homepageFixedHero } from '@/lib/hero-config';
 
 const heroScenes = [
   { category: 'braai', image: '/hero-scenes/braai.webp' },
@@ -28,6 +29,7 @@ export default function Home() {
   const [session, setSession] = useState(null);
   const [heroScene, setHeroScene] = useState(heroScenes[0]);
   const [heroProducts, setHeroProducts] = useState(() => products.filter(product => product.category === heroScenes[0].category).slice(0, 1));
+  const [heroMode, setHeroMode] = useState(DEFAULT_HERO_MODE);
   const cartReady = useRef(false);
 
   useEffect(() => {
@@ -44,6 +46,7 @@ export default function Home() {
       setCatalog((current) => current.map(applyDimensions));
       setHeroProducts((current) => current.map(applyDimensions));
     }).catch(() => {});
+    fetch('/api/site-settings', { cache: 'no-store' }).then((res) => res.json()).then((data) => setHeroMode(data.heroMode || DEFAULT_HERO_MODE)).catch(() => {});
   }, []);
 
   useEffect(() => { if (cartReady.current) window.localStorage.setItem('deli-cart', JSON.stringify(cart)); }, [cart]);
@@ -118,18 +121,19 @@ export default function Home() {
       <div className="header-actions">{session?.authenticated ? <a className="account-link" href="/api/auth/logout" title="Kijelentkezés">{session.user.name}</a> : <a className="account-link" href="/api/auth/login?returnTo=%2F%23shop">Belépés</a>}<button className="cart-button" onClick={() => setCartOpen(true)}>Kosár <span>{cartCount}</span></button></div>
     </header>
 
-    <section className="hero" id="top">
+    <section className={`hero hero-mode-${heroMode}`} id="top">
+      {heroMode === 'fixed' && <Image className="fixed-hero-image" src={homepageFixedHero} alt="Nando's peri-peri szósz dél-afrikai tálalási környezetben" fill priority sizes="100vw" />}
       <div className="hero-copy">
         <div className="eyebrow">DÉL-AFRIKAI KEDVENCEK. NEKED VÁLOGATVA.</div>
         <h1>TASTE<br/>SOUTH<br/>AFRICA.</h1>
         <p>Dél-Afrika karakteres ízei hozzád közelebb. Válogatott braai szószok, chutney-k, rooibos teák, fűszerek és kultikus snackek.</p>
         <a className="button button-red" href="#shop">Fedezd fel</a>
       </div>
-      <div className={`hero-stage hero-category-${heroScene.category}`} style={{ backgroundImage: `url(${heroScene.image})` }}>
+      {heroMode === 'interactive' && <div className={`hero-stage hero-category-${heroScene.category}`} style={{ backgroundImage: `url(${heroScene.image})` }}>
         <div className="sun-disc">FROM<br/>CAPE<br/>TO<br/>YOU</div>
         <div className={`hero-products hero-products-${heroProducts.length}`}>{heroProducts.map((product, index) => <ProductVisual product={product} hero large className={`hero-product hero-count-${heroProducts.length} hero-product-${index + 1}`} key={product.id}/>)}</div>
         <div className="spice-sweep">peri · coriander · rooibos · smoke</div>
-      </div>
+      </div>}
     </section>
 
     <section className="story-block" id="story">
