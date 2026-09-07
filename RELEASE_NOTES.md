@@ -32,6 +32,7 @@
 - Commercially reusable Pexels food photography on product guides, with source credits
 
 ## ✅ Fixed Bugs
+- Product detail hero images now run edge-to-edge on mobile so the category colour background no longer appears as side gutters
 - Removed the reconstructed SVG marks so headers, footers, product cards and editorial tiles use only official brand artwork
 - Re-encoded catalogue photography at a web-safe 1024 × 1024 resolution to eliminate partial grey/corrupt rendering in production
 - Locked the modal media panel to the source image's square aspect ratio instead of stretching it to the copy height
