@@ -10,6 +10,7 @@
 - Customer profile copy, placeholders, metadata and order-status labels are editable.
 - Customer-facing API success/error messages are editable.
 - Site, product, category and legal metadata now derive from editable content.
+- Added a versioned one-time content migration so existing MongoDB products receive the full PDP content model without overwriting non-empty administrator data.
 
 ## ✅ Fixed Bugs
 - Removed the remaining baked-in customer-facing copy from homepage interactions, product pages, category pages, profile, mobile menu, auth error screen, cookie consent, footer social accessibility labels and legal page metadata.
@@ -17,7 +18,7 @@
 - Product pages no longer depend on static product content after MongoDB has been seeded.
 - Raw backend values such as `paid` and `delivered` are no longer shown directly to customers on profile order history.
 - Product image/fallback labels no longer contain baked-in marketing text.
-- Existing MongoDB products receive newly introduced PDP fields from the original seed only when those fields do not already exist, preserving administrator edits.
+- Existing MongoDB products with previously empty PDP fields are migrated from the original seed exactly once; subsequent administrator edits, including intentionally clearing a field, are preserved.
 
 ## ✅ Known Issues
 - `lib/products.js` remains intentionally as initial seed/development fallback data. In normal Production operation with MongoDB connected, it is not the canonical catalogue.
