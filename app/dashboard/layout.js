@@ -8,6 +8,7 @@ export const dynamic = 'force-dynamic';
 
 const nav = [
   ['/dashboard', 'Áttekintés'],
+  ['/dashboard/users', 'Felhasználók'],
   ['/dashboard/products', 'Termékek'],
   ['/dashboard/orders', 'Rendelések'],
   ['/dashboard/integrations', 'Integrációk'],
