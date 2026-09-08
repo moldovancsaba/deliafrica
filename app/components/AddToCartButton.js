@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export default function AddToCartButton({ productId }) {
+export default function AddToCartButton({ productId, label = '', addedLabel = '' }) {
   const [added, setAdded] = useState(false);
 
   function addToCart() {
@@ -13,5 +13,5 @@ export default function AddToCartButton({ productId }) {
     setAdded(true);
   }
 
-  return <button className="button button-red" onClick={addToCart}>{added ? 'Kosárba téve ✓' : 'Kosárba'}</button>;
+  return <button className="button button-red" onClick={addToCart}>{added ? addedLabel : label}</button>;
 }
