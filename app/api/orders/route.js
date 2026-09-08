@@ -3,6 +3,7 @@ import { connectToDatabase } from '@/lib/db';
 import Order from '@/models/Order';
 import { products } from '@/lib/products';
 import { getSession, isAuthConfigured } from '@/lib/auth';
+import { getSiteSettings } from '@/lib/site-settings';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,6 +12,8 @@ function fail(message, status = 400) {
 }
 
 export async function POST(request) {
+  const settings = await getSiteSettings();
+  if (!settings.sales.checkoutEnabled) return fail('A rendelésfelvétel átmenetileg szünetel.', 503);
   const session = await getSession();
   const authConfigured = isAuthConfigured();
   if (authConfigured && !session) return fail('A rendeléshez bejelentkezés szükséges.', 401);

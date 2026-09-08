@@ -1,6 +1,11 @@
-# Release Notes — v0.7.2
+# Release Notes — v0.8.0
 
 ## ✅ New Features
+- Expanded the admin into storefront display, editable content, sales-process preparation and v1.0 audit sections
+- Added an admin switch between fixed photographic and generated homepage category selectors
+- Added persisted editing for homepage hero, story and “Miért mi?” content
+- Added checkout availability, provider target flow, merchant readiness and legal-link settings
+- Added an explicit administration audit documenting delivered, externally blocked and roadmap items
 - Added automatic rotation through the six category hero photographs on the homepage
 - Added all 11 client-supplied fixed hero compositions and made fixed photography the storefront default
 - Added an admin hero switch between fixed client photography and the generated interactive presentation

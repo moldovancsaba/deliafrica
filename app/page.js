@@ -7,7 +7,8 @@ import { categories, products, formatPrice } from '@/lib/products';
 import ProductVisual from '@/app/components/ProductVisual';
 import BrandLogo from '@/app/components/BrandLogo';
 import { APP_VERSION } from '@/lib/version';
-import { DEFAULT_HERO_MODE, homepageFixedHeroes } from '@/lib/hero-config';
+import { DEFAULT_HERO_MODE, fixedHeroByCategory, homepageFixedHeroes } from '@/lib/hero-config';
+import { DEFAULT_STOREFRONT_CONTENT } from '@/lib/site-config';
 
 const heroScenes = [
   { category: 'braai', image: '/hero-scenes/braai.webp' },
@@ -31,6 +32,9 @@ export default function Home() {
   const [heroProducts, setHeroProducts] = useState(() => products.filter(product => product.category === heroScenes[0].category).slice(0, 1));
   const [heroMode, setHeroMode] = useState(DEFAULT_HERO_MODE);
   const [fixedHeroIndex, setFixedHeroIndex] = useState(0);
+  const [categorySelectorMode, setCategorySelectorMode] = useState('fixed');
+  const [storefrontContent, setStorefrontContent] = useState(DEFAULT_STOREFRONT_CONTENT);
+  const [checkoutEnabled, setCheckoutEnabled] = useState(true);
   const cartReady = useRef(false);
 
   useEffect(() => {
@@ -47,7 +51,12 @@ export default function Home() {
       setCatalog((current) => current.map(applyDimensions));
       setHeroProducts((current) => current.map(applyDimensions));
     }).catch(() => {});
-    fetch('/api/site-settings', { cache: 'no-store' }).then((res) => res.json()).then((data) => setHeroMode(data.heroMode || DEFAULT_HERO_MODE)).catch(() => {});
+    fetch('/api/site-settings', { cache: 'no-store' }).then((res) => res.json()).then((data) => {
+      setHeroMode(data.heroMode || DEFAULT_HERO_MODE);
+      setCategorySelectorMode(data.categorySelectorMode || 'fixed');
+      setStorefrontContent({ ...DEFAULT_STOREFRONT_CONTENT, ...(data.storefrontContent || {}) });
+      setCheckoutEnabled(data.sales?.checkoutEnabled !== false);
+    }).catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -109,6 +118,7 @@ export default function Home() {
   }
 
   function beginCheckout() {
+    if (!checkoutEnabled) return;
     if (session?.configured === false) {
       setCartOpen(false);
       setCheckout(true);
@@ -133,10 +143,10 @@ export default function Home() {
     <section className={`hero hero-mode-${heroMode}`} id="top">
       {heroMode === 'fixed' && <Image key={homepageFixedHeroes[fixedHeroIndex]} className="fixed-hero-image fixed-hero-image-rotating" src={homepageFixedHeroes[fixedHeroIndex]} alt="Dél-afrikai termék tálalási környezetben" fill priority={fixedHeroIndex === 0} sizes="100vw" />}
       <div className="hero-copy">
-        <div className="eyebrow">DÉL-AFRIKAI KEDVENCEK. NEKED VÁLOGATVA.</div>
-        <h1>TASTE<br/>SOUTH<br/>AFRICA.</h1>
-        <p>Dél-Afrika karakteres ízei hozzád közelebb. Válogatott braai szószok, chutney-k, rooibos teák, fűszerek és kultikus snackek.</p>
-        <a className="button button-red" href="#shop">Fedezd fel</a>
+        <div className="eyebrow">{storefrontContent.heroEyebrow}</div>
+        <h1>{storefrontContent.heroTitle.split('\n').map((line) => <span key={line}>{line}<br/></span>)}</h1>
+        <p>{storefrontContent.heroBody}</p>
+        <a className="button button-red" href="#shop">{storefrontContent.heroButton}</a>
       </div>
       {heroMode === 'interactive' && <div className={`hero-stage hero-category-${heroScene.category}`} style={{ backgroundImage: `url(${heroScene.image})` }}>
         <div className="sun-disc">FROM<br/>CAPE<br/>TO<br/>YOU</div>
@@ -146,12 +156,12 @@ export default function Home() {
     </section>
 
     <section className="story-block" id="story">
-      <div><span className="eyebrow dark">A DELI.AFRICA TÖRTÉNETE</span><h2>Dél-afrikai ízek, érthetően és könnyen kipróbálhatóan.</h2></div>
-      <div className="story-copy"><p>A deli.africa azért született, hogy a dél-afrikai kamra karakteres kedvencei ne csak különlegességek legyenek, hanem a hétköznapi étkezések részei is. A válogatásban a füstös braai, a citrusos peri-peri, a rooibos és az otthonos snackek világa találkozik.</p><p>Nem feltételezzük, hogy már ismered őket: minden terméknél megmutatjuk az ízprofilt, a legjobb párosításokat és egy egyszerű első kóstolási ötletet. Így magabiztosan választhatsz magadnak vagy ajándékba.</p><a className="story-link" href="#shop">Megnézem a válogatást →</a></div>
+      <div><span className="eyebrow dark">{storefrontContent.storyLabel}</span><h2>{storefrontContent.storyTitle}</h2></div>
+      <div className="story-copy">{storefrontContent.storyBody.split(/\n\n+/).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}<a className="story-link" href="#shop">Megnézem a válogatást →</a></div>
     </section>
 
     <section className="why-block" id="why">
-      <div className="why-heading"><span className="eyebrow">MIÉRT DELI.AFRICA?</span><h2>Kevesebb találgatás.<br/>Több jó falat.</h2><p>Olyan válogatást építünk, amelyben gyorsan megtalálod az alkalomhoz és az ízlésedhez illő terméket.</p></div>
+      <div className="why-heading"><span className="eyebrow">{storefrontContent.whyLabel}</span><h2>{storefrontContent.whyTitle.split('\n').map((line) => <span key={line}>{line}<br/></span>)}</h2><p>{storefrontContent.whyBody}</p></div>
       <div className="why-grid">
         <article><b>01</b><h3>13 átlátható választás</h3><p>Szűk, gondosan bemutatott kínálat: nem kell több száz hasonló terméket végignézned.</p></article>
         <article><b>02</b><h3>Íz alapján dönthetsz</h3><p>Minden oldalon konkrét ízjegyeket, felhasználási módokat és párosításokat találsz.</p></article>
@@ -162,7 +172,7 @@ export default function Home() {
 
     <section className="shop" id="shop">
       <div className="section-head"><div><span className="eyebrow dark">SHOP THE COLLECTION</span><h2>Mit kóstolnál meg?</h2></div><button className={`category-reset ${category === 'all' ? 'active' : ''}`} onClick={() => setCategory('all')}>Minden termék</button></div>
-      <div className="category-selector" aria-label="Termékkategóriák">{categories.filter(c => c.id !== 'all').map(c => <div className={`category-tile ${c.tone} ${category === c.id ? 'active' : ''}`} key={c.id}><button onClick={() => setCategory(c.id)} aria-pressed={category === c.id}><span>{c.visualLabel.map(line => <b key={line}>{line}</b>)}</span><Image src={c.image} alt="" fill sizes="(max-width: 650px) 62vw, 17vw" /></button><Link href={`/categories/${c.id}`}>Kategória bemutatása →</Link></div>)}</div>
+      <div className={`category-selector mode-${categorySelectorMode}`} aria-label="Termékkategóriák">{categories.filter(c => c.id !== 'all').map(c => <div className={`category-tile ${c.tone} ${category === c.id ? 'active' : ''}`} key={c.id}><button onClick={() => setCategory(c.id)} aria-pressed={category === c.id}><span>{c.visualLabel.map(line => <b key={line}>{line}</b>)}</span><Image src={categorySelectorMode === 'fixed' ? fixedHeroByCategory[c.id] : c.image} alt="" fill sizes="(max-width: 650px) 62vw, 17vw" /></button><Link href={`/categories/${c.id}`}>Kategória bemutatása →</Link></div>)}</div>
       <div className="product-grid">{shown.map(product => <article className="product-card" key={product.id}>
         <button className={`visual-button tone-${product.tone}`} onClick={() => setDetail(product)}><ProductVisual product={product}/><span className="badge">{product.badge}</span></button>
         <div className="product-info"><small>{product.subtitle}</small><h3>{product.name}</h3><p>{product.story}</p><div className="product-bottom"><strong>{formatPrice(product.price)}</strong><button disabled={product.price == null} onClick={() => add(product.id)} aria-label={`${product.name} kosárba`}>{product.price == null ? '–' : '+'}</button></div></div>
@@ -193,7 +203,7 @@ export default function Home() {
       {cartRows.length === 0 ? <div className="empty-cart">A kosarad még üres.<button className="button button-dark" onClick={() => setCartOpen(false)}>Válogatok tovább</button></div> : <>
         <div className="cart-lines">{cartRows.map(({ product, quantity }) => <div className="cart-line" key={product.id}><ProductVisual product={product}/><div><b>{product.name}</b><span>{formatPrice(product.price)}</span><div className="qty"><button onClick={() => setQty(product.id, quantity - 1)}>−</button><span>{quantity}</span><button onClick={() => setQty(product.id, quantity + 1)}>+</button></div></div></div>)}</div>
         <div className="cart-total"><span>Összesen</span><strong>{formatPrice(total)}</strong></div>
-        <button className="button button-red full" onClick={beginCheckout}>{session?.authenticated || session?.configured === false ? 'Tovább a rendeléshez' : 'Belépés és rendelés'}</button>
+        <button className="button button-red full" disabled={!checkoutEnabled} onClick={beginCheckout}>{!checkoutEnabled ? 'Rendelés átmenetileg szünetel' : session?.authenticated || session?.configured === false ? 'Tovább a rendeléshez' : 'Belépés és rendelés'}</button>
       </>}
     </aside>
     {cartOpen && <button className="drawer-overlay" aria-label="Kosár bezárása" onClick={() => setCartOpen(false)}/>}
