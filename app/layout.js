@@ -3,6 +3,7 @@ import './card-branding.css';
 import './product-pages.css';
 import './mobile-product-fixes.css';
 import './modal-white.css';
+import './mobile-hero-fixes.css';
 import { Analytics } from '@vercel/analytics/next';
 
 export const metadata = {
