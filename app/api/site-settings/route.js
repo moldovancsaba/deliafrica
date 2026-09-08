@@ -5,15 +5,26 @@ import { DEFAULT_HERO_MODE, HERO_MODES } from '@/lib/hero-config';
 import { getSiteSettings } from '@/lib/site-settings';
 import { DEFAULT_SITE_SETTINGS } from '@/lib/site-config';
 import SiteSetting from '@/models/SiteSetting';
+import IntegrationSetting from '@/models/IntegrationSetting';
 
 export const dynamic = 'force-dynamic';
 
+function sanitizeCopy(value) {
+  if (Array.isArray(value)) return value.slice(0, 30).map(sanitizeCopy);
+  if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([key, item]) => [String(key).slice(0, 100), sanitizeCopy(item)]));
+  return String(value ?? '').slice(0, 5000);
+}
+
 export async function GET() {
   const settings = await getSiteSettings();
+  const mongo = await connectToDatabase();
+  let stored = [];
+  if (mongo.connected) stored = await IntegrationSetting.find({}).select('provider enabled credentials').lean();
+  const configured = Object.fromEntries(stored.map((item) => [item.provider, Boolean(item.enabled && item.credentials && Object.keys(item.credentials).length)]));
   return NextResponse.json({ ...settings, defaultHeroMode: DEFAULT_HERO_MODE, providerReadiness: {
-    packeta: Boolean(process.env.PACKETA_API_KEY),
-    barion: Boolean(process.env.BARION_POS_KEY),
-    billingo: Boolean(process.env.BILLINGO_API_KEY)
+    packeta: configured.packeta || Boolean(process.env.PACKETA_API_KEY),
+    barion: configured.barion || Boolean(process.env.BARION_POS_KEY),
+    billingo: configured.billingo || Boolean(process.env.BILLINGO_API_KEY)
   } }, { headers: { 'cache-control': 'no-store' } });
 }
 
@@ -33,6 +44,10 @@ export async function PUT(request) {
   if (body.storefrontContent !== undefined) {
     if (!body.storefrontContent || typeof body.storefrontContent !== 'object') return NextResponse.json({ error: 'Invalid storefront content' }, { status: 400 });
     updates.storefrontContent = Object.fromEntries(Object.entries(DEFAULT_SITE_SETTINGS.storefrontContent).map(([key, fallback]) => [key, String(body.storefrontContent[key] ?? fallback).slice(0, 2000)]));
+  }
+  if (body.uiCopy !== undefined) {
+    if (!body.uiCopy || typeof body.uiCopy !== 'object') return NextResponse.json({ error: 'Invalid UI copy' }, { status: 400 });
+    updates.uiCopy = sanitizeCopy(body.uiCopy);
   }
   if (body.sales !== undefined) {
     if (!body.sales || typeof body.sales !== 'object') return NextResponse.json({ error: 'Invalid sales settings' }, { status: 400 });
