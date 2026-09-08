@@ -16,11 +16,20 @@ export async function GET() {
   if (mongo.connected) {
     const startOfDay = new Date();
     startOfDay.setUTCHours(0, 0, 0, 0);
+
+    // An order is open only while it still requires operational action.
+    // Delivered, returned, cancelled, refunded and legacy fulfilled orders are closed.
+    const openOrderFilter = {
+      orderStatus: { $nin: ['cancelled', 'refunded'] },
+      deliveryStatus: { $nin: ['delivered', 'returned'] },
+      status: { $nin: ['cancelled', 'fulfilled'] }
+    };
+
     const [total, today, open, revenue] = await Promise.all([
       Order.countDocuments(),
       Order.countDocuments({ createdAt: { $gte: startOfDay } }),
-      Order.countDocuments({ status: { $in: ['new', 'confirmed'] } }),
-      Order.aggregate([{ $match: { status: { $ne: 'cancelled' } } }, { $group: { _id: null, value: { $sum: '$total' } } }])
+      Order.countDocuments(openOrderFilter),
+      Order.aggregate([{ $match: { orderStatus: { $nin: ['cancelled', 'refunded'] }, status: { $ne: 'cancelled' } } }, { $group: { _id: null, value: { $sum: '$total' } } }])
     ]);
     orders = { available: true, total, today, open, revenue: revenue[0]?.value || 0 };
   }
