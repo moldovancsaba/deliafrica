@@ -17,6 +17,10 @@ const heroScenes = [
   { category: 'snacks', image: '/hero-scenes/snacks.webp' }
 ];
 
+function savedAddress(address = {}) {
+  return [address.postalCode, address.city, address.addressLine1, address.addressLine2, address.country].map(value => String(value || '').trim()).filter(Boolean).join(', ');
+}
+
 export default function Home() {
   const [catalog, setCatalog] = useState(products);
   const [category, setCategory] = useState('all');
@@ -43,7 +47,21 @@ export default function Home() {
     cartReady.current = true;
     fetch('/api/auth/session', { cache: 'no-store' }).then((res) => res.json()).then((data) => {
       setSession(data);
-      if (data.authenticated) setForm((current) => ({ ...current, customerName: data.user.name || current.customerName, email: data.user.email || current.email }));
+      if (data.authenticated) {
+        setForm((current) => ({ ...current, customerName: data.user.name || current.customerName, email: data.user.email || current.email }));
+        fetch('/api/profile', { cache:'no-store' }).then(res => res.ok ? res.json() : null).then(profileData => {
+          if (!profileData?.profile) return;
+          const profile = profileData.profile;
+          const address = savedAddress(profile.shippingAddress);
+          setForm(current => ({
+            ...current,
+            customerName: profile.shippingAddress?.recipientName || profile.name || current.customerName,
+            email: profile.email || current.email,
+            phone: profile.shippingAddress?.phone || profile.phone || current.phone,
+            address: address || current.address
+          }));
+        }).catch(() => {});
+      }
     }).catch(() => setSession({ authenticated: false }));
     fetch('/api/product-settings', { cache: 'no-store' }).then((res) => res.json()).then((data) => {
       const settings = new Map((data.products || []).map((item) => [item.id, item]));
@@ -138,7 +156,7 @@ export default function Home() {
     <header className="site-header">
       <a href="#top" className="brand-link" aria-label="deli.africa"><BrandLogo /></a>
       <nav><a href="#shop">{uiCopy.nav.shop}</a><a href="#story">{uiCopy.nav.story}</a><a href="#why">{uiCopy.nav.why}</a>{session?.permission?.status === 'approved' && session?.permission?.role === 'admin' && <Link href="/dashboard">{uiCopy.nav.dashboard}</Link>}</nav>
-      <div className="header-actions">{session?.authenticated ? <a className="account-link" href="/api/auth/logout" title={uiCopy.nav.logout}>{session.user.name}</a> : <a className="account-link" href="/api/auth/login?returnTo=%2F%23shop">{uiCopy.nav.login}</a>}<button className="cart-button" onClick={() => setCartOpen(true)}>{uiCopy.nav.cart} <span>{cartCount}</span></button></div>
+      <div className="header-actions">{session?.authenticated ? <Link className="account-link" href="/profile" title="Profil">{session.user.name}</Link> : <a className="account-link" href="/api/auth/login?returnTo=%2F%23shop">{uiCopy.nav.login}</a>}<button className="cart-button" onClick={() => setCartOpen(true)}>{uiCopy.nav.cart} <span>{cartCount}</span></button></div>
     </header>
 
     <section className={`hero hero-mode-${heroMode}`} id="top">
