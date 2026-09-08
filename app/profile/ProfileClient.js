@@ -5,14 +5,26 @@ import Link from 'next/link';
 import BrandLogo from '@/app/components/BrandLogo';
 import { DEFAULT_STOREFRONT_UI_COPY } from '@/lib/storefront-copy';
 
-const empty={name:'',email:'',phone:'',shippingAddress:{recipientName:'',phone:'',country:'Hungary',postalCode:'',city:'',addressLine1:'',addressLine2:'',deliveryNote:''},billingDetails:{billingName:'',companyName:'',taxNumber:'',country:'Hungary',postalCode:'',city:'',addressLine1:'',addressLine2:''}};
+const empty={name:'',email:'',phone:'',shippingAddress:{recipientName:'',phone:'',country:'',postalCode:'',city:'',addressLine1:'',addressLine2:'',deliveryNote:''},billingDetails:{billingName:'',companyName:'',taxNumber:'',country:'',postalCode:'',city:'',addressLine1:'',addressLine2:''}};
 function money(value,currency='HUF'){return new Intl.NumberFormat('hu-HU',{style:'currency',currency,maximumFractionDigits:0}).format(Number(value)||0);}
 function date(value){if(!value)return'—';try{return new Intl.DateTimeFormat('hu-HU',{dateStyle:'medium',timeStyle:'short'}).format(new Date(value));}catch{return'—';}}
 
 export default function ProfileClient(){
   const [profile,setProfile]=useState(empty);const [orders,setOrders]=useState([]);const [loading,setLoading]=useState(true);const [saving,setSaving]=useState(false);const [message,setMessage]=useState('');const [error,setError]=useState('');const [uiCopy,setUiCopy]=useState(DEFAULT_STOREFRONT_UI_COPY);
   const copy=uiCopy.profile;const statuses=uiCopy.orderStatus;
-  async function load(){setLoading(true);setError('');const [profileRes,settingsRes]=await Promise.all([fetch('/api/profile',{cache:'no-store'}),fetch('/api/site-settings',{cache:'no-store'}).catch(()=>null)]);const data=await profileRes.json().catch(()=>({}));if(settingsRes?.ok){const settings=await settingsRes.json().catch(()=>({}));if(settings.uiCopy)setUiCopy(settings.uiCopy);}if(!profileRes.ok)setError(data.error||copy.loadError);else{setProfile({...empty,...(data.profile||{}),shippingAddress:{...empty.shippingAddress,...(data.profile?.shippingAddress||{})},billingDetails:{...empty.billingDetails,...(data.profile?.billingDetails||{})}});setOrders(data.orders||[]);}setLoading(false);}
+  async function load(){
+    setLoading(true);setError('');
+    const [profileRes,settingsRes]=await Promise.all([fetch('/api/profile',{cache:'no-store'}),fetch('/api/site-settings',{cache:'no-store'}).catch(()=>null)]);
+    let resolvedCopy=uiCopy;
+    if(settingsRes?.ok){const settings=await settingsRes.json().catch(()=>({}));if(settings.uiCopy){resolvedCopy=settings.uiCopy;setUiCopy(settings.uiCopy);}}
+    const data=await profileRes.json().catch(()=>({}));
+    if(!profileRes.ok)setError(data.error||resolvedCopy.profile.loadError);
+    else{
+      const defaultCountry=resolvedCopy.profile.defaultCountry||'';
+      setProfile({...empty,...(data.profile||{}),shippingAddress:{...empty.shippingAddress,country:defaultCountry,...(data.profile?.shippingAddress||{})},billingDetails:{...empty.billingDetails,country:defaultCountry,...(data.profile?.billingDetails||{})}});setOrders(data.orders||[]);
+    }
+    setLoading(false);
+  }
   useEffect(()=>{load();},[]);
   function setField(section,key,value){if(!section)return setProfile(current=>({...current,[key]:value}));setProfile(current=>({...current,[section]:{...current[section],[key]:value}}));}
   function copyShippingToBilling(){const s=profile.shippingAddress;setProfile(current=>({...current,billingDetails:{...current.billingDetails,billingName:current.billingDetails.billingName||s.recipientName,country:s.country,postalCode:s.postalCode,city:s.city,addressLine1:s.addressLine1,addressLine2:s.addressLine2}}));}
