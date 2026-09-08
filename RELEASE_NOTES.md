@@ -1,4 +1,4 @@
-# Release Notes — v0.7.1
+# Release Notes — v0.7.2
 
 ## ✅ New Features
 - Added automatic rotation through the six category hero photographs on the homepage
@@ -36,6 +36,7 @@
 - Commercially reusable Pexels food photography on product guides, with source credits
 
 ## ✅ Fixed Bugs
+- Changed the desktop product hero media surround from category colours to solid black
 - Fixed supplied hero photographs to preserve their natural aspect ratio, match the hero height and stay right-aligned
 - Restored exact product photography on product pages so category editorial imagery can never misrepresent a product
 - Product detail hero images now run edge-to-edge on mobile so the category colour background no longer appears as side gutters
