@@ -9,10 +9,10 @@ import IntegrationSetting from '@/models/IntegrationSetting';
 
 export const dynamic = 'force-dynamic';
 
-function sanitizeCopy(value) {
-  if (Array.isArray(value)) return value.slice(0, 30).map(sanitizeCopy);
-  if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([key, item]) => [String(key).slice(0, 100), sanitizeCopy(item)]));
-  return String(value ?? '').slice(0, 5000);
+function sanitizeCopy(value, max = 5000) {
+  if (Array.isArray(value)) return value.slice(0, 40).map((item) => sanitizeCopy(item, max));
+  if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([key, item]) => [String(key).slice(0, 100), sanitizeCopy(item, max)]));
+  return String(value ?? '').slice(0, max);
 }
 
 export async function GET() {
@@ -47,7 +47,11 @@ export async function PUT(request) {
   }
   if (body.uiCopy !== undefined) {
     if (!body.uiCopy || typeof body.uiCopy !== 'object') return NextResponse.json({ error: 'Invalid UI copy' }, { status: 400 });
-    updates.uiCopy = sanitizeCopy(body.uiCopy);
+    updates.uiCopy = sanitizeCopy(body.uiCopy, 5000);
+  }
+  if (body.legal !== undefined) {
+    if (!body.legal || typeof body.legal !== 'object') return NextResponse.json({ error: 'Invalid legal settings' }, { status: 400 });
+    updates.legal = sanitizeCopy(body.legal, 30000);
   }
   if (body.sales !== undefined) {
     if (!body.sales || typeof body.sales !== 'object') return NextResponse.json({ error: 'Invalid sales settings' }, { status: 400 });
