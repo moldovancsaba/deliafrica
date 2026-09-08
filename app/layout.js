@@ -13,15 +13,18 @@ import MobileMenu from '@/app/components/MobileMenu';
 import { getSiteSettings } from '@/lib/site-settings';
 import { APP_VERSION } from '@/lib/version';
 
-export const metadata = {
-  metadataBase: new URL('https://deliafrica.vercel.app'),
-  title: 'deli.africa — Dél-Afrika, válogatva',
-  description: 'Kurált dél-afrikai ízek: peri-peri, chutney, rooibos, braai fűszerek és klasszikus snackek.',
-  themeColor: '#ff0d00',
-  openGraph: { siteName: 'deli.africa', locale: 'hu_HU', type: 'website' }
-};
+export async function generateMetadata() {
+  const settings = await getSiteSettings();
+  return {
+    metadataBase: new URL('https://deliafrica.vercel.app'),
+    title: settings.uiCopy.seo?.siteTitle,
+    description: settings.uiCopy.seo?.siteDescription,
+    themeColor: '#ff0d00',
+    openGraph: { siteName: settings.legal?.company?.companyName, locale: 'hu_HU', type: 'website', title: settings.uiCopy.seo?.siteTitle, description: settings.uiCopy.seo?.siteDescription }
+  };
+}
 
 export default async function RootLayout({ children }) {
   const settings = await getSiteSettings();
-  return <html lang="hu"><body>{children}<MobileMenu/><GlobalStoreFooter legal={settings.legal} copy={settings.uiCopy} version={APP_VERSION}/><CookieConsent copy={settings.legal?.cookieBanner} /><ConsentAnalytics /></body></html>;
+  return <html lang="hu"><body>{children}<MobileMenu/><GlobalStoreFooter legal={settings.legal} copy={settings.uiCopy} version={APP_VERSION}/><CookieConsent copy={settings.legal?.cookieBanner}/><ConsentAnalytics/></body></html>;
 }
