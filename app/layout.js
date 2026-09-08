@@ -7,7 +7,9 @@ import './mobile-hero-fixes.css';
 import './legal-footer.css';
 import CookieConsent from '@/app/components/CookieConsent';
 import ConsentAnalytics from '@/app/components/ConsentAnalytics';
+import GlobalStoreFooter from '@/app/components/GlobalStoreFooter';
 import { getSiteSettings } from '@/lib/site-settings';
+import { APP_VERSION } from '@/lib/version';
 
 export const metadata = {
   metadataBase: new URL('https://deliafrica.vercel.app'),
@@ -18,5 +20,5 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   const settings = await getSiteSettings();
-  return <html lang="hu"><body>{children}<CookieConsent copy={settings.legal?.cookieBanner} /><ConsentAnalytics /></body></html>;
+  return <html lang="hu"><body>{children}<GlobalStoreFooter legal={settings.legal} copy={settings.uiCopy} version={APP_VERSION}/><CookieConsent copy={settings.legal?.cookieBanner} /><ConsentAnalytics /></body></html>;
 }
