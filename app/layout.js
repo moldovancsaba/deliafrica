@@ -4,7 +4,10 @@ import './product-pages.css';
 import './mobile-product-fixes.css';
 import './modal-white.css';
 import './mobile-hero-fixes.css';
-import { Analytics } from '@vercel/analytics/next';
+import './legal-footer.css';
+import CookieConsent from '@/app/components/CookieConsent';
+import ConsentAnalytics from '@/app/components/ConsentAnalytics';
+import { getSiteSettings } from '@/lib/site-settings';
 
 export const metadata = {
   metadataBase: new URL('https://deliafrica.vercel.app'),
@@ -13,6 +16,7 @@ export const metadata = {
   openGraph: { siteName: 'deli.africa', locale: 'hu_HU', type: 'website' }
 };
 
-export default function RootLayout({ children }) {
-  return <html lang="hu"><body>{children}<Analytics /></body></html>;
+export default async function RootLayout({ children }) {
+  const settings = await getSiteSettings();
+  return <html lang="hu"><body>{children}<CookieConsent copy={settings.legal?.cookieBanner} /><ConsentAnalytics /></body></html>;
 }
