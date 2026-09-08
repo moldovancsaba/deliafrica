@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/db';
 import Order from '@/models/Order';
+import User from '@/models/User';
 import { products } from '@/lib/products';
 import { getSession, isAuthConfigured } from '@/lib/auth';
 import { getSiteSettings } from '@/lib/site-settings';
@@ -9,6 +10,10 @@ export const dynamic = 'force-dynamic';
 
 function fail(message, status = 400) {
   return NextResponse.json({ ok: false, error: message }, { status });
+}
+
+function addressString(address = {}) {
+  return [address.postalCode, address.city, address.addressLine1, address.addressLine2, address.country].map(value => String(value || '').trim()).filter(Boolean).join(', ');
 }
 
 export async function POST(request) {
@@ -21,10 +26,17 @@ export async function POST(request) {
   const body = await request.json().catch(() => null);
   if (!body) return fail('Érvénytelen rendelési adatok.');
 
+  const db = await connectToDatabase();
+  const profile = db.connected && session?.user.id ? await User.findOne({ ssoUserId: session.user.id }).lean() : null;
+
   const customerName = String(session?.user.name || body.customerName || '').trim();
   const email = String(session?.user.email || body.email || '').trim();
-  const address = String(body.address || '').trim();
-  const phone = String(body.phone || '').trim();
+  const profileShipping = addressString(profile?.shippingAddress);
+  const address = String(body.address || profileShipping || '').trim();
+  const phone = String(body.phone || profile?.shippingAddress?.phone || profile?.phone || '').trim();
+  const billingName = String(profile?.billingDetails?.billingName || profile?.billingDetails?.companyName || customerName).trim();
+  const billingAddress = addressString(profile?.billingDetails) || address;
+  const taxNumber = String(profile?.billingDetails?.taxNumber || '').trim();
 
   if (!customerName || !email.includes('@') || !address) {
     return fail('Név, érvényes e-mail és szállítási cím szükséges.');
@@ -46,10 +58,21 @@ export async function POST(request) {
   }
 
   const reference = `DA-${Date.now().toString(36).toUpperCase()}`;
-  const db = await connectToDatabase();
 
   if (db.connected) {
-    await Order.create({ reference, ssoUserId: session?.user.id || '', customerName, email, phone, address, items, total });
+    await Order.create({
+      reference,
+      ssoUserId: session?.user.id || '',
+      customerName,
+      email,
+      phone,
+      address,
+      billingName,
+      billingAddress,
+      taxNumber,
+      items,
+      total
+    });
   }
 
   return NextResponse.json({
