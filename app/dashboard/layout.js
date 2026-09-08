@@ -12,6 +12,7 @@ const nav = [
   ['/dashboard/orders', 'Rendelések'],
   ['/dashboard/integrations', 'Integrációk'],
   ['/dashboard/content', 'Tartalom'],
+  ['/dashboard/legal', 'Jogi és cégadatok'],
   ['/dashboard/storefront', 'Megjelenés'],
   ['/dashboard/system', 'Rendszer']
 ];
