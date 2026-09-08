@@ -1,6 +1,8 @@
-# Release Notes — v0.8.0
+# Release Notes — v0.12.1
 
 ## ✅ New Features
+- Added an admin-managed Google Analytics 4 integration with an enable switch, Measurement ID validation and live readiness status
+- The storefront now loads Google Analytics only when an enabled, valid GA4 Measurement ID has been saved
 - Expanded the admin into storefront display, editable content, sales-process preparation and v1.0 audit sections
 - Added an admin switch between fixed photographic and generated homepage category selectors
 - Added persisted editing for homepage hero, story and “Miért mi?” content

@@ -26,5 +26,7 @@ export async function generateMetadata() {
 
 export default async function RootLayout({ children }) {
   const settings = await getSiteSettings();
-  return <html lang="hu"><body>{children}<MobileMenu/><GlobalStoreFooter legal={settings.legal} copy={settings.uiCopy} version={APP_VERSION}/><CookieConsent copy={settings.legal?.cookieBanner}/><ConsentAnalytics/></body></html>;
+  const measurementId = settings.analytics?.googleAnalyticsMeasurementId || '';
+  const googleAnalyticsEnabled = settings.analytics?.googleAnalyticsEnabled && /^G-[A-Z0-9]+$/i.test(measurementId);
+  return <html lang="hu"><body>{children}<MobileMenu/><GlobalStoreFooter legal={settings.legal} copy={settings.uiCopy} version={APP_VERSION}/><CookieConsent copy={settings.legal?.cookieBanner}/><ConsentAnalytics googleAnalyticsMeasurementId={googleAnalyticsEnabled ? measurementId : ''}/></body></html>;
 }
