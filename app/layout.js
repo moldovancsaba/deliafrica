@@ -5,6 +5,7 @@ import './mobile-product-fixes.css';
 import './modal-white.css';
 import './mobile-hero-fixes.css';
 import './legal-footer.css';
+import './brand-theme.css';
 import CookieConsent from '@/app/components/CookieConsent';
 import ConsentAnalytics from '@/app/components/ConsentAnalytics';
 import GlobalStoreFooter from '@/app/components/GlobalStoreFooter';
@@ -15,6 +16,7 @@ export const metadata = {
   metadataBase: new URL('https://deliafrica.vercel.app'),
   title: 'deli.africa — Dél-Afrika, válogatva',
   description: 'Kurált dél-afrikai ízek: peri-peri, chutney, rooibos, braai fűszerek és klasszikus snackek.',
+  themeColor: '#ff0d00',
   openGraph: { siteName: 'deli.africa', locale: 'hu_HU', type: 'website' }
 };
 
