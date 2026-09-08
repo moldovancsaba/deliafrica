@@ -11,6 +11,7 @@ export default function StoreFooter({ legal, copy, version }) {
   const company = legal?.company || {};
   const docs = legal?.documents || {};
   const footer = copy?.footer || {};
+  const social = copy?.social || {};
   return <footer className="store-footer">
     <div className="store-footer-brand">
       <BrandLogo inverse />
@@ -31,9 +32,9 @@ export default function StoreFooter({ legal, copy, version }) {
     </div>
     <div className="store-footer-column store-footer-social">
       <h3>{footer.socialTitle}</h3>
-      {company.instagramUrl && <a className="social-link" href={company.instagramUrl} target="_blank" rel="noreferrer" aria-label={`Instagram ${company.instagram}`}><SocialIcon type="instagram"/><span>{company.instagram}</span></a>}
-      {company.xUrl && <a className="social-link" href={company.xUrl} target="_blank" rel="noreferrer" aria-label={`X ${company.x}`}><SocialIcon type="x"/><span>{company.x}</span></a>}
-      {company.facebookUrl && <a className="social-link" href={company.facebookUrl} target="_blank" rel="noreferrer" aria-label={`Facebook ${company.facebook}`}><SocialIcon type="facebook"/><span>{company.facebook}</span></a>}
+      {company.instagramUrl && <a className="social-link" href={company.instagramUrl} target="_blank" rel="noreferrer" aria-label={`${social.instagram} ${company.instagram}`}><SocialIcon type="instagram"/><span>{company.instagram}</span></a>}
+      {company.xUrl && <a className="social-link" href={company.xUrl} target="_blank" rel="noreferrer" aria-label={`${social.x} ${company.x}`}><SocialIcon type="x"/><span>{company.x}</span></a>}
+      {company.facebookUrl && <a className="social-link" href={company.facebookUrl} target="_blank" rel="noreferrer" aria-label={`${social.facebook} ${company.facebook}`}><SocialIcon type="facebook"/><span>{company.facebook}</span></a>}
     </div>
     <div className="store-footer-bottom">
       <span>© {new Date().getFullYear()} {company.companyName} · {footer.rights}</span>
