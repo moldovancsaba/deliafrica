@@ -25,9 +25,10 @@ export default async function LegalDocumentPage({params}){
   const doc=settings.legal?.documents?.[slug];
   if(!doc)notFound();
   const company=settings.legal?.company||{};
+  const copy=settings.uiCopy||{};
   return <main className="legal-page">
-    <header className="legal-header"><Link href="/" className="brand-link" aria-label="deli.africa"><BrandLogo /></Link><Link className="legal-back" href="/">Vissza a shophoz</Link></header>
-    <section className="legal-hero"><span className="eyebrow">DELI.AFRICA · LEGAL</span><h1>{doc.title}</h1><p>{doc.summary}</p></section>
+    <header className="legal-header"><Link href="/" className="brand-link" aria-label={company.companyName||'deli.africa'}><BrandLogo /></Link><Link className="legal-back" href="/">{copy.productPage?.back}</Link></header>
+    <section className="legal-hero"><span className="eyebrow">{copy.footer?.legalTitle}</span><h1>{doc.title}</h1><p>{doc.summary}</p></section>
     <section className="legal-content"><article className="legal-document"><p>{doc.body}</p></article><aside className="legal-contact-box"><div><b>{company.companyName}</b><br/>{company.contactName}</div><div>{company.address}</div><div><a href={`mailto:${company.email}`}>{company.email}</a><br/><a href={`tel:${String(company.phone||'').replace(/\s+/g,'')}`}>{company.phone}</a></div></aside></section>
     <StoreFooter legal={settings.legal} copy={settings.uiCopy} version={APP_VERSION}/>
   </main>;
