@@ -1,6 +1,7 @@
 # Admin dashboard audit — webshop feedback v1.0
 
 ## Delivered
+- Google Analytics 4 can be enabled and configured from the admin dashboard with a validated Measurement ID.
 
 - System health, MongoDB, SSO, order totals, runtime and deployment status
 - Fixed/generated hero mode for homepage and category pages

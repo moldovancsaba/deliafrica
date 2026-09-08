@@ -24,7 +24,8 @@ export async function GET() {
   return NextResponse.json({ ...settings, defaultHeroMode: DEFAULT_HERO_MODE, providerReadiness: {
     packeta: configured.packeta || Boolean(process.env.PACKETA_API_KEY),
     barion: configured.barion || Boolean(process.env.BARION_POS_KEY),
-    billingo: configured.billingo || Boolean(process.env.BILLINGO_API_KEY)
+    billingo: configured.billingo || Boolean(process.env.BILLINGO_API_KEY),
+    googleAnalytics: Boolean(settings.analytics?.googleAnalyticsEnabled && /^G-[A-Z0-9]+$/i.test(settings.analytics?.googleAnalyticsMeasurementId || ''))
   } }, { headers: { 'cache-control': 'no-store' } });
 }
 
@@ -60,6 +61,12 @@ export async function PUT(request) {
       senderName: String(body.sales.senderName || 'deli.africa').slice(0, 120), supportEmail: String(body.sales.supportEmail || '').slice(0, 200),
       termsUrl: String(body.sales.termsUrl || '').slice(0, 500), privacyUrl: String(body.sales.privacyUrl || '').slice(0, 500)
     };
+  }
+  if (body.analytics !== undefined) {
+    if (!body.analytics || typeof body.analytics !== 'object') return NextResponse.json({ error: 'Invalid analytics settings' }, { status: 400 });
+    const measurementId = String(body.analytics.googleAnalyticsMeasurementId || '').trim().toUpperCase().slice(0, 30);
+    if (measurementId && !/^G-[A-Z0-9]+$/.test(measurementId)) return NextResponse.json({ error: 'Invalid Google Analytics Measurement ID' }, { status: 400 });
+    updates.analytics = { googleAnalyticsEnabled: Boolean(body.analytics.googleAnalyticsEnabled), googleAnalyticsMeasurementId: measurementId };
   }
   if (Object.keys(updates).length === 0) return NextResponse.json({ error: 'No supported settings supplied' }, { status: 400 });
   const mongo = await connectToDatabase();
