@@ -22,6 +22,19 @@ const ParcelSchema = new mongoose.Schema({
   unitsPerParcel: { type: Number, min: 1, default: 1 }
 }, { _id: false });
 
+const FaqSchema = new mongoose.Schema({
+  question: { type: String, default: '' },
+  answer: { type: String, default: '' }
+}, { _id: false });
+
+const SeoSchema = new mongoose.Schema({
+  title: { type: String, default: '' },
+  description: { type: String, default: '' },
+  aiSummary: { type: String, default: '' },
+  ogTitle: { type: String, default: '' },
+  ogDescription: { type: String, default: '' }
+}, { _id: false });
+
 const ProductSchema = new mongoose.Schema({
   id: { type: String, required: true, unique: true, index: true, trim: true },
   slug: { type: String, required: true, unique: true, index: true, trim: true },
@@ -35,7 +48,9 @@ const ProductSchema = new mongoose.Schema({
   tone: { type: String, default: 'red' },
   visual: { type: String, default: 'box' },
   image: { type: String, default: '' },
+  heroImage: { type: String, default: '' },
   editorialImage: { type: String, default: '' },
+  editorialCaption: { type: String, default: '' },
   price: { type: Number, min: 0, default: null },
   currency: { type: String, default: 'HUF' },
   vatRate: { type: Number, min: 0, max: 100, default: 27 },
@@ -43,9 +58,11 @@ const ProductSchema = new mongoose.Schema({
   purchasable: { type: Boolean, default: true },
   story: { type: String, default: '' },
   whatItIs: { type: String, default: '' },
+  background: { type: String, default: '' },
   flavour: { type: String, default: '' },
   audience: { type: String, default: '' },
   packaging: { type: String, default: '' },
+  info: { type: String, default: '' },
   originCountry: { type: String, default: 'South Africa' },
   brand: { type: String, default: '' },
   ingredients: { type: String, default: '' },
@@ -54,6 +71,8 @@ const ProductSchema = new mongoose.Schema({
   nutrition: { type: String, default: '' },
   pairings: { type: [String], default: [] },
   servingIdeas: { type: [String], default: [] },
+  faq: { type: [FaqSchema], default: [] },
+  seo: { type: SeoSchema, default: () => ({}) },
   dimensions: { type: DimensionsSchema, default: () => ({}) },
   parcel: { type: ParcelSchema, default: () => ({}) },
   inventory: { type: InventorySchema, default: () => ({}) },
