@@ -1,0 +1,43 @@
+:root{
+  --red:#ff0d00;
+  --ink:#0d0d0d;
+  --warm:#fbf7f4;
+  --mango:#ffc92b;
+  --olive:#607a4a;
+  --guava:#fe8fa4;
+  --orange:#ff6554;
+  --fig:#6b3e63;
+  --rooibos:#a84d32;
+  --sand:#e8d9c2;
+  --line:#dedbd4;
+  --white:#ffffff;
+}
+
+/* Canonical deli.africa brand surfaces */
+body{background:var(--warm);color:var(--ink)}
+.site-header{background:rgba(251,247,244,.96)}
+.hero,.trust-strip,.store-footer,.admin-sidebar{background:var(--ink)}
+.button-red,.cart-button span,.product-bottom button,.editorial-card.red,.admin-button.red,.cookie-actions .accept{background:var(--red)!important}
+.button-dark,.cart-button,.category-reset.active,.badge,.legal-back,.product-list button.active{background:var(--ink)!important}
+.editorial-card.olive{background:var(--olive)!important}
+.editorial-card.fig{background:var(--fig)!important}
+.editorial-card.mango{background:var(--mango)!important;color:var(--ink)!important}
+.product-visual.red{--tone:var(--red)}
+.product-visual.olive{--tone:var(--olive)}
+.product-visual.guava{--tone:var(--guava)}
+.product-visual.orange{--tone:var(--orange)}
+.product-visual.fig{--tone:var(--fig)}
+.product-visual.rooibos{--tone:var(--rooibos)}
+.product-visual.sand{--tone:var(--sand)}
+.product-visual.mango{--tone:var(--mango)}
+.store-footer{border-top-color:var(--red)!important;background:var(--ink)!important}
+.store-footer a:hover,.admin-sidebar nav a:hover{color:var(--red)!important}
+.legal-page,.admin-layout,.dashboard-shell{background:var(--warm)!important;color:var(--ink)!important}
+.cookie-consent,.dashboard-panel,.order-toast{background:var(--ink)!important}
+.legal-hero .eyebrow{color:var(--red)!important}
+.admin-button,.timeline div{border-color:var(--ink)}
+
+/* Remove legacy near-match reds/blacks from visible chrome */
+.hero-stage{background-color:var(--ink)}
+.sun-disc{background:var(--mango);color:var(--ink)}
+.social-link,.store-footer a{color:var(--white)}
