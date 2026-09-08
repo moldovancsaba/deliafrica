@@ -19,6 +19,7 @@
 - Raw backend values such as `paid` and `delivered` are no longer shown directly to customers on profile order history.
 - Product image/fallback labels no longer contain baked-in marketing text.
 - Existing MongoDB products with previously empty PDP fields are migrated from the original seed exactly once; subsequent administrator edits, including intentionally clearing a field, are preserved.
+- Fixed the migration selector so legacy product documents that predate the content-version marker are included correctly.
 
 ## ✅ Known Issues
 - `lib/products.js` remains intentionally as initial seed/development fallback data. In normal Production operation with MongoDB connected, it is not the canonical catalogue.
