@@ -1,4 +1,4 @@
-# Release Notes — v0.12.1
+# Release Notes — v0.12.2
 
 ## ✅ New Features
 - Added an admin-managed Google Analytics 4 integration with an enable switch, Measurement ID validation and live readiness status
@@ -43,6 +43,7 @@
 - Commercially reusable Pexels food photography on product guides, with source credits
 
 ## ✅ Fixed Bugs
+- Restored editable Google Analytics controls on the active Dashboard → Integrációk page, including saved configuration status, validation, retry and save feedback.
 - Changed the desktop product hero media surround from category colours to solid black
 - Fixed supplied hero photographs to preserve their natural aspect ratio, match the hero height and stay right-aligned
 - Restored exact product photography on product pages so category editorial imagery can never misrepresent a product
