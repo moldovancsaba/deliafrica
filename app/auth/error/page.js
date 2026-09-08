@@ -1,5 +1,8 @@
 import Link from 'next/link';
+import { getSiteSettings } from '@/lib/site-settings';
 
-export default function AuthError() {
-  return <main className="auth-state"><span className="eyebrow dark">SSO HIBA</span><h1>A bejelentkezés nem sikerült.</h1><p>A munkamenet lejárhatott, vagy az alkalmazás-hozzáférés nincs még jóváhagyva.</p><Link className="button button-red" href="/api/auth/login">Újrapróbálom</Link><Link href="/">Vissza a webshophoz</Link></main>;
+export default async function AuthError() {
+  const settings=await getSiteSettings();
+  const copy=settings.uiCopy.authError;
+  return <main className="auth-state"><span className="eyebrow dark">{copy.eyebrow}</span><h1>{copy.title}</h1><p>{copy.body}</p><Link className="button button-red" href="/api/auth/login">{copy.retry}</Link><Link href="/">{copy.back}</Link></main>;
 }
