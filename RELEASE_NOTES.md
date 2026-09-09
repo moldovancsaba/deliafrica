@@ -1,3 +1,25 @@
+## 0.14.0 — GDS Coral bloom
+
+### New features
+- Coral bloom from GDS 6.7.0 across the storefront, account, legal pages, and admin dashboard.
+- GDS application shell, responsive layouts, product cards, labelled forms, media fallbacks, dialogs, cart quantity controls, and confirmation dialogs.
+- Private-package installation in local development, GitHub Actions, and Vercel; GDS lint/compliance and automated browser/accessibility gates.
+
+### Fixed bugs
+- Removed application-owned stylesheets and inline visual constants.
+- Added the GDS overlay manager for cart dialogs and focus/keyboard behavior.
+- Checkout failures retain the basket and show an error; requests time out without automatic order retries.
+- Pinned supported rendering peers to prevent a Next.js runtime incompatibility.
+
+### Known issues
+- GDS's optional strict scanner misclassifies its own exported JSX components and the necessary Next.js client boundary. Standard GDS compliance and design-value lint remain enforced; see docs/customer-direct/GDS_MIGRATION.md.
+- Automated accessibility results do not replace manual assistive-technology testing.
+- Payment, invoice, and delivery integrations retain their existing readiness; this release does not complete their backend rollout.
+
+### Future roadmap
+- Continue the customer.direct multi-shop platform issues and production rollout.
+- Re-enable strict scanner mode after upstream JSX/import-provenance fixes.
+
 # Release Notes — v0.13.0
 
 ## ✅ New Features

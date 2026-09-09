@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "gdsVersion": "6.7.0",
+  "productArchetype": "hybrid-commerce-admin",
+  "requiredContracts": [
+    "AppShell",
+    "GdsProvider",
+    "PublicProductCard",
+    "GdsDrawer",
+    "Modal",
+    "TextInput",
+    "Select",
+    "Checkbox",
+    "GdsGrid",
+    "MediaWithFallback"
+  ],
+  "localAdapters": [],
+  "approvedExceptions": [],
+  "migrationStatus": "verification",
+  "owner": "moldovancsaba",
+  "lastReviewedAt": "2026-09-09",
+  "compliance": {
+    "strictMode": false
+  }
+}
