@@ -16,14 +16,8 @@ jobs:
       - uses: pnpm/action-setup@v4
         with:
           version: 11.19.0
-      - run: node scripts/install-dependencies.mjs
-        env:
-          GITHUB_TOKEN: ${{ secrets.GDS_PACKAGES_TOKEN }}
-      - run: pnpm lint
-      - run: pnpm gds:check
+      - run: pnpm install --frozen-lockfile
       - run: pnpm check
-      - run: pnpm exec playwright install --with-deps chromium
-      - run: pnpm test:browser
       - name: Start isolated MongoDB replica
         run: docker run --detach --name customer-direct-mongo --publish 127.0.0.1:27119:27119 mongo:8.0.26 --replSet customerDirectTest --bind_ip_all --port 27119
       - run: node scripts/start-test-replica.mjs

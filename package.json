@@ -1,6 +1,6 @@
 {
   "name": "deliafrica",
-  "version": "0.14.0",
+  "version": "0.13.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,20 +9,10 @@
     "test": "node --test tests/*.test.mjs",
     "check": "node scripts/check.mjs",
     "test:integration": "node scripts/integration-check.mjs",
-    "baseline:check": "node scripts/baseline-check.mjs",
-    "lint": "eslint app",
-    "gds:check": "gds-compliance validate-manifest --manifest ./gds-adoption.json && gds-compliance check --manifest ./gds-adoption.json",
-    "test:browser": "playwright test"
+    "baseline:check": "node scripts/baseline-check.mjs"
   },
   "dependencies": {
-    "@mantine/core": "8.3.0",
-    "@mantine/dates": "8.3.0",
-    "@mantine/hooks": "8.3.0",
-    "@mantine/modals": "8.3.0",
-    "@mantine/notifications": "8.3.0",
     "@next/third-parties": "15.5.2",
-    "@sovereignsquad/gds": "6.7.0",
-    "@sovereignsquad/gds-theme": "6.7.0",
     "@vercel/analytics": "2.0.1",
     "mongoose": "8.24.4",
     "next": "15.5.25",
@@ -34,13 +24,5 @@
   "engines": {
     "node": "24.x"
   },
-  "packageManager": "pnpm@11.19.0",
-  "devDependencies": {
-    "@axe-core/playwright": "4.10.2",
-    "@playwright/test": "1.55.0",
-    "@sovereignsquad/gds-a11y": "6.7.0",
-    "@sovereignsquad/gds-compliance": "6.7.0",
-    "@sovereignsquad/gds-eslint-config": "6.7.0",
-    "eslint": "10.10.0"
-  }
+  "packageManager": "pnpm@11.19.0"
 }

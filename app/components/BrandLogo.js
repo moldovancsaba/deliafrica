@@ -1,6 +1,5 @@
-import { GdsBox, MediaWithFallback } from '@/app/components/gds';
-export default function BrandLogo({
-  alt = 'deli.africa'
-}) {
-  return <GdsBox maxWidth="xs"><MediaWithFallback src="/brand/logo-brand.png" alt={alt} ratio={1} fallbackLabel="deli.africa" showShimmer={false} /></GdsBox>;
+import Image from 'next/image';
+
+export default function BrandLogo({ inverse = false, alt = '' }) {
+  return <Image className="brand-logo" src={inverse ? '/brand/logo-dark.png' : '/brand/logo-brand.png'} alt={alt} width={1200} height={1200} priority={!inverse} />;
 }

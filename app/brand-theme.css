@@ -1,0 +1,67 @@
+:root{
+  --red:#ff0d00;
+  --ink:#0d0d0d;
+  --warm:#fbf7f4;
+  --mango:#ffc92b;
+  --olive:#607a4a;
+  --guava:#fe8fa4;
+  --orange:#ff6554;
+  --fig:#6b3e63;
+  --rooibos:#a84d32;
+  --sand:#e8d9c2;
+  --line:#dedbd4;
+  --white:#ffffff;
+}
+
+/* Canonical deli.africa brand surfaces */
+body{background:var(--warm);color:var(--ink)}
+.site-header{background:rgba(251,247,244,.96)}
+.hero,.trust-strip,.store-footer,.admin-sidebar{background:var(--ink)}
+.button-red,.cart-button span,.product-bottom button,.editorial-card.red,.admin-button.red,.cookie-actions .accept{background:var(--red)!important}
+.button-dark,.cart-button,.category-reset.active,.badge,.legal-back,.product-list button.active{background:var(--ink)!important}
+.editorial-card.olive{background:var(--olive)!important}
+.editorial-card.fig{background:var(--fig)!important}
+.editorial-card.mango{background:var(--mango)!important;color:var(--ink)!important}
+.product-visual.red{--tone:var(--red)}
+.product-visual.olive{--tone:var(--olive)}
+.product-visual.guava{--tone:var(--guava)}
+.product-visual.orange{--tone:var(--orange)}
+.product-visual.fig{--tone:var(--fig)}
+.product-visual.rooibos{--tone:var(--rooibos)}
+.product-visual.sand{--tone:var(--sand)}
+.product-visual.mango{--tone:var(--mango)}
+.store-footer{border-top-color:var(--white)!important;background:var(--ink)!important}
+.store-footer a:hover,.admin-sidebar nav a:hover{color:var(--red)!important}
+.legal-page,.admin-layout,.dashboard-shell{background:var(--warm)!important;color:var(--ink)!important}
+.cookie-consent,.dashboard-panel,.order-toast{background:var(--ink)!important}
+.legal-hero .eyebrow{color:var(--red)!important}
+.admin-button,.timeline div{border-color:var(--ink)}
+
+/* Remove legacy near-match reds/blacks from visible chrome */
+.hero-stage{background-color:var(--ink)}
+.sun-disc{background:var(--mango);color:var(--ink)}
+.social-link,.store-footer a{color:var(--white)}
+
+/* Responsive hamburger navigation */
+.mobile-menu-shell{display:none}
+@media(max-width:1000px){
+  .mobile-menu-shell{display:block;position:fixed;z-index:45;top:0;left:calc(5vw - 8px);height:88px;pointer-events:none}
+  .site-header .brand-link{margin-left:56px}
+  .mobile-menu-toggle{pointer-events:auto;position:absolute;top:50%;left:0;transform:translateY(-50%);width:48px;height:48px;border:0;background:transparent;display:grid;place-content:center;gap:5px;padding:0}
+  .mobile-menu-toggle span{display:block;width:25px;height:2px;background:var(--ink);transition:.2s ease}
+  .mobile-menu-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .mobile-menu-toggle.open span:nth-child(2){opacity:0}
+  .mobile-menu-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .mobile-menu-backdrop{pointer-events:auto;position:fixed;inset:88px 0 0;border:0;background:rgba(0,0,0,.48)}
+  .mobile-menu-panel{pointer-events:auto;position:fixed;top:88px;left:0;width:min(360px,92vw);background:var(--warm);border-top:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.2);padding:18px 24px 28px}
+  .mobile-menu-panel nav{display:flex;flex-direction:column}
+  .mobile-menu-panel a{color:var(--ink);text-decoration:none;font-weight:900;font-size:18px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .mobile-menu-panel a:last-child{border-bottom:0}
+}
+@media(max-width:650px){
+  .mobile-menu-shell{height:74px;left:6px}
+  .site-header .brand-link{margin-left:48px}
+  .mobile-menu-backdrop{inset:74px 0 0}
+  .mobile-menu-panel{top:74px}
+  .site-header .account-link{display:none}
+}
