@@ -41,3 +41,7 @@ npm run dev
 ## Production
 
 The repository is linked to Vercel and `main` is the production branch. A push to `main` triggers production deployment.
+
+## customer.direct platform planning
+
+The multi-shop platform backlog is managed on the [customer.direct project board](https://github.com/users/moldovancsaba/projects/62). See the [implementation plan](CUSTOMER_DIRECT_IMPLEMENTATION_PLAN.md) and [engineering execution ledger](docs/customer-direct/README.md). All planned frontend work uses GDS exclusively, with accessibility, localization and multicurrency support from the foundation.

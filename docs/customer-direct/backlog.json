@@ -1,0 +1,778 @@
+{
+  "verifiedAt": "2026-09-09T08:34:30.733Z",
+  "repository": "moldovancsaba/deliafrica",
+  "project": {
+    "id": "PVT_kwHOACGtF84Bi7DE",
+    "number": 62,
+    "title": "customer.direct — Engineering delivery",
+    "url": "https://github.com/users/moldovancsaba/projects/62"
+  },
+  "canonicalStandard": "https://github.com/sovereignsquad/general-design-system/issues/81",
+  "counts": {
+    "issues": 45,
+    "dependencies": 159,
+    "milestones": 6
+  },
+  "issues": [
+    {
+      "key": "01",
+      "number": 1,
+      "title": "Foundation: Compatibility baseline - reproducible deli.africa migration fixtures",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/1",
+      "milestone": "M1",
+      "executionOrder": 10,
+      "blockedBy": [],
+      "externalBlockedBy": [],
+      "area": "platform",
+      "readiness": "Ready"
+    },
+    {
+      "key": "02",
+      "number": 2,
+      "title": "Quality: Delivery checks - enforce executable release and handover gates",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/2",
+      "milestone": "M1",
+      "executionOrder": 20,
+      "blockedBy": [
+        1
+      ],
+      "externalBlockedBy": [],
+      "area": "quality",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "03",
+      "number": 3,
+      "title": "Design: GDS package foundation - one accessible component and token authority",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/3",
+      "milestone": "M1",
+      "executionOrder": 30,
+      "blockedBy": [
+        1,
+        2
+      ],
+      "externalBlockedBy": [],
+      "area": "design",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "04",
+      "number": 4,
+      "title": "Localization: Message runtime - translated GDS interfaces with RTL and fallback",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/4",
+      "milestone": "M1",
+      "executionOrder": 40,
+      "blockedBy": [
+        3
+      ],
+      "externalBlockedBy": [],
+      "area": "i18n",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "05",
+      "number": 5,
+      "title": "Data: Shop registry - durable ownership and lifecycle identifiers",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/5",
+      "milestone": "M1",
+      "executionOrder": 50,
+      "blockedBy": [
+        2
+      ],
+      "externalBlockedBy": [],
+      "area": "data",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "06",
+      "number": 6,
+      "title": "Security: Credential envelopes - versioned encryption and redacted audits",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/6",
+      "milestone": "M1",
+      "executionOrder": 60,
+      "blockedBy": [
+        2,
+        5
+      ],
+      "externalBlockedBy": [],
+      "area": "security",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "07",
+      "number": 7,
+      "title": "Data: Tenant connections - isolated Mongoose models and database replacement",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/7",
+      "milestone": "M1",
+      "executionOrder": 70,
+      "blockedBy": [
+        5,
+        6
+      ],
+      "externalBlockedBy": [],
+      "area": "data",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "08",
+      "number": 8,
+      "title": "Access: Shop memberships - deny-by-default authorization and revocation",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/8",
+      "milestone": "M1",
+      "executionOrder": 80,
+      "blockedBy": [
+        2,
+        5
+      ],
+      "externalBlockedBy": [],
+      "area": "security",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "09",
+      "number": 9,
+      "title": "Access: Superadmin shop grants - time-bounded audited business-data access",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/9",
+      "milestone": "M2",
+      "executionOrder": 90,
+      "blockedBy": [
+        6,
+        8
+      ],
+      "externalBlockedBy": [],
+      "area": "security",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "10",
+      "number": 10,
+      "title": "Routing: Verified host context - isolate storefront resolution and caches",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/10",
+      "milestone": "M2",
+      "executionOrder": 100,
+      "blockedBy": [
+        5,
+        7
+      ],
+      "externalBlockedBy": [],
+      "area": "platform",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "11",
+      "number": 11,
+      "title": "Admin: Empty-shop creation - superadmin ownership and membership workflow",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/11",
+      "milestone": "M2",
+      "executionOrder": 110,
+      "blockedBy": [
+        3,
+        4,
+        5,
+        8,
+        9
+      ],
+      "externalBlockedBy": [],
+      "area": "admin",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "12",
+      "number": 12,
+      "title": "Admin: Shop selector - URL-scoped navigation without stale writes",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/12",
+      "milestone": "M2",
+      "executionOrder": 120,
+      "blockedBy": [
+        3,
+        4,
+        8,
+        11
+      ],
+      "externalBlockedBy": [],
+      "area": "admin",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "13",
+      "number": 13,
+      "title": "Catalogue: Shop-owned products - isolated merchandising and empty-state behavior",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/13",
+      "milestone": "M2",
+      "executionOrder": 130,
+      "blockedBy": [
+        7,
+        8,
+        12
+      ],
+      "externalBlockedBy": [],
+      "area": "catalogue",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "14",
+      "number": 14,
+      "title": "Settings: Shop configuration - isolate content legal and sales settings",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/14",
+      "milestone": "M2",
+      "executionOrder": 140,
+      "blockedBy": [
+        7,
+        8,
+        12
+      ],
+      "externalBlockedBy": [],
+      "area": "admin",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "15",
+      "number": 15,
+      "title": "Customers: Shop relationships - scoped profile and purchase-history access",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/15",
+      "milestone": "M2",
+      "executionOrder": 150,
+      "blockedBy": [
+        7,
+        8,
+        12
+      ],
+      "externalBlockedBy": [],
+      "area": "customers",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "16",
+      "number": 16,
+      "title": "Money: Currency arithmetic - exact amounts and deterministic order totals",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/16",
+      "milestone": "M3",
+      "executionOrder": 160,
+      "blockedBy": [
+        2
+      ],
+      "externalBlockedBy": [],
+      "area": "commerce",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "17",
+      "number": 17,
+      "title": "Commerce: Shop currency settings - validated price lists and admin editing",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/17",
+      "milestone": "M3",
+      "executionOrder": 170,
+      "blockedBy": [
+        4,
+        13,
+        14,
+        16
+      ],
+      "externalBlockedBy": [],
+      "area": "commerce",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "19",
+      "number": 18,
+      "title": "Inventory: Stock reservations - atomic competing-order protection",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/18",
+      "milestone": "M3",
+      "executionOrder": 180,
+      "blockedBy": [
+        13,
+        16
+      ],
+      "externalBlockedBy": [],
+      "area": "commerce",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "18",
+      "number": 19,
+      "title": "Checkout: Durable quotes and orders - currency review and idempotent submission",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/19",
+      "milestone": "M3",
+      "executionOrder": 190,
+      "blockedBy": [
+        15,
+        16,
+        17,
+        18
+      ],
+      "externalBlockedBy": [],
+      "area": "commerce",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "25",
+      "number": 20,
+      "title": "Integrations: Shop secret editor - provider capability and connection readiness",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/20",
+      "milestone": "M3",
+      "executionOrder": 200,
+      "blockedBy": [
+        6,
+        7,
+        12,
+        14
+      ],
+      "externalBlockedBy": [],
+      "area": "integrations",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "24",
+      "number": 21,
+      "title": "Operations: Transactional outbox - leased retry and reconciliation jobs",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/21",
+      "milestone": "M3",
+      "executionOrder": 210,
+      "blockedBy": [
+        2,
+        7,
+        8
+      ],
+      "externalBlockedBy": [],
+      "area": "operations",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "20",
+      "number": 22,
+      "title": "Delivery: Packeta selection - shop credentials and durable fulfillment requests",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/22",
+      "milestone": "M3",
+      "executionOrder": 220,
+      "blockedBy": [
+        17,
+        20,
+        21
+      ],
+      "externalBlockedBy": [],
+      "area": "integrations",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "21",
+      "number": 23,
+      "title": "Payments: Barion lifecycle - verified callbacks and duplicate-safe capture state",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/23",
+      "milestone": "M3",
+      "executionOrder": 230,
+      "blockedBy": [
+        19,
+        20,
+        21
+      ],
+      "externalBlockedBy": [],
+      "area": "integrations",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "22",
+      "number": 24,
+      "title": "Invoicing: Billingo jobs - immutable invoice snapshots and safe retries",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/24",
+      "milestone": "M3",
+      "executionOrder": 240,
+      "blockedBy": [
+        20,
+        21,
+        23
+      ],
+      "externalBlockedBy": [],
+      "area": "integrations",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "23",
+      "number": 25,
+      "title": "Orders: Audited transitions and refunds - preserve financial invariants",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/25",
+      "milestone": "M3",
+      "executionOrder": 250,
+      "blockedBy": [
+        12,
+        22,
+        23,
+        24
+      ],
+      "externalBlockedBy": [],
+      "area": "commerce",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "26",
+      "number": 26,
+      "title": "Analytics: Per-shop consent - isolated GA configuration and runtime loading",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/26",
+      "milestone": "M3",
+      "executionOrder": 260,
+      "blockedBy": [
+        10,
+        14,
+        20
+      ],
+      "externalBlockedBy": [],
+      "area": "integrations",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "27",
+      "number": 27,
+      "title": "Media: Tenant assets - persistent uploads and localized accessible metadata",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/27",
+      "milestone": "M4",
+      "executionOrder": 270,
+      "blockedBy": [
+        3,
+        4,
+        7,
+        8
+      ],
+      "externalBlockedBy": [],
+      "area": "design",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "28",
+      "number": 28,
+      "title": "Content: Locale publishing - complete translations and preserved SEO routes",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/28",
+      "milestone": "M4",
+      "executionOrder": 280,
+      "blockedBy": [
+        4,
+        10,
+        13,
+        14
+      ],
+      "externalBlockedBy": [],
+      "area": "i18n",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "29",
+      "number": 29,
+      "title": "Storefront: GDS commerce surfaces - retain deli functionality across shop contexts",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/29",
+      "milestone": "M4",
+      "executionOrder": 290,
+      "blockedBy": [
+        3,
+        4,
+        10,
+        13,
+        19,
+        27,
+        28
+      ],
+      "externalBlockedBy": [],
+      "area": "design",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "30",
+      "number": 30,
+      "title": "Branding: Governed theme publishing - GDS presets and constrained customization",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/30",
+      "milestone": "M4",
+      "executionOrder": 300,
+      "blockedBy": [
+        14,
+        27,
+        29
+      ],
+      "externalBlockedBy": [],
+      "area": "design",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "31",
+      "number": 31,
+      "title": "Domains: Self-service verification - temporary addresses and canonical activation",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/31",
+      "milestone": "M4",
+      "executionOrder": 310,
+      "blockedBy": [
+        10,
+        11,
+        12
+      ],
+      "externalBlockedBy": [],
+      "area": "platform",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "32",
+      "number": 32,
+      "title": "Launch: Readiness transitions - empty-shop activation suspension and archive",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/32",
+      "milestone": "M4",
+      "executionOrder": 320,
+      "blockedBy": [
+        11,
+        17,
+        22,
+        23,
+        24,
+        26,
+        28,
+        30,
+        31
+      ],
+      "externalBlockedBy": [],
+      "area": "platform",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "33",
+      "number": 33,
+      "title": "Health: Measured shop status - redacted platform overview and real activity",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/33",
+      "milestone": "M4",
+      "executionOrder": 330,
+      "blockedBy": [
+        9,
+        12,
+        17,
+        21
+      ],
+      "externalBlockedBy": [],
+      "area": "operations",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "34",
+      "number": 34,
+      "title": "DiscountDirect: Commerce adapter contract - seller identity and durable synchronization",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/34",
+      "milestone": "M5",
+      "executionOrder": 340,
+      "blockedBy": [
+        13,
+        15,
+        21
+      ],
+      "externalBlockedBy": [],
+      "area": "discountdirect",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "35",
+      "number": 35,
+      "title": "Identity: Cross-domain SSO - audience-bound shop sessions and logout",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/35",
+      "milestone": "M5",
+      "executionOrder": 350,
+      "blockedBy": [
+        8,
+        10,
+        15,
+        31
+      ],
+      "externalBlockedBy": [],
+      "area": "security",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "44",
+      "number": 36,
+      "title": "Recovery: Merchant export and restore - tenant-only backups with verified manifests",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/36",
+      "milestone": "M5",
+      "executionOrder": 360,
+      "blockedBy": [
+        7,
+        8,
+        9,
+        21
+      ],
+      "externalBlockedBy": [],
+      "area": "operations",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "36",
+      "number": 37,
+      "title": "Migration: Deli tenant conversion - resumable dry-run and reversible cutover",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/37",
+      "milestone": "M5",
+      "executionOrder": 370,
+      "blockedBy": [
+        13,
+        14,
+        15,
+        17,
+        29,
+        35,
+        36
+      ],
+      "externalBlockedBy": [],
+      "area": "migration",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "37",
+      "number": 38,
+      "title": "Security: Tenant attack suite - verify every cross-shop entry point",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/38",
+      "milestone": "M5",
+      "executionOrder": 380,
+      "blockedBy": [
+        12,
+        13,
+        14,
+        15,
+        20,
+        27,
+        31,
+        35
+      ],
+      "externalBlockedBy": [],
+      "area": "quality",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "38",
+      "number": 39,
+      "title": "Accessibility: Release matrix - GDS locale theme and checkout regression evidence",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/39",
+      "milestone": "M5",
+      "executionOrder": 390,
+      "blockedBy": [
+        12,
+        19,
+        26,
+        28,
+        29,
+        30
+      ],
+      "externalBlockedBy": [],
+      "area": "quality",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "45",
+      "number": 40,
+      "title": "Privacy: Merchant consent and account lifecycle - isolate preferences and retention actions",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/40",
+      "milestone": "M5",
+      "executionOrder": 400,
+      "blockedBy": [
+        15,
+        26,
+        35,
+        36
+      ],
+      "externalBlockedBy": [],
+      "area": "customers",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "39",
+      "number": 41,
+      "title": "Release: Two-shop production pilot - evidence-based rollout and recovery rehearsal",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/41",
+      "milestone": "M5",
+      "executionOrder": 410,
+      "blockedBy": [
+        32,
+        33,
+        34,
+        37,
+        38,
+        39,
+        40
+      ],
+      "externalBlockedBy": [],
+      "area": "release",
+      "readiness": "Blocked"
+    },
+    {
+      "key": "40",
+      "number": 42,
+      "title": "Benefits: Participating campaigns - issuer-funded currency-specific eligibility",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/42",
+      "milestone": "M6",
+      "executionOrder": 420,
+      "blockedBy": [
+        34,
+        41
+      ],
+      "externalBlockedBy": [
+        {
+          "repository": "moldovancsaba/discountdirect",
+          "number": 11,
+          "id": 5385474154,
+          "url": "https://github.com/moldovancsaba/discountdirect/issues/11"
+        },
+        {
+          "repository": "moldovancsaba/discountdirect",
+          "number": 12,
+          "id": 5385474340,
+          "url": "https://github.com/moldovancsaba/discountdirect/issues/12"
+        }
+      ],
+      "area": "discountdirect",
+      "readiness": "Later"
+    },
+    {
+      "key": "41",
+      "number": 43,
+      "title": "Benefits: Redemption saga - atomic reservation and payment-linked consumption",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/43",
+      "milestone": "M6",
+      "executionOrder": 430,
+      "blockedBy": [
+        18,
+        21,
+        23,
+        42
+      ],
+      "externalBlockedBy": [
+        {
+          "repository": "moldovancsaba/discountdirect",
+          "number": 16,
+          "id": 5385475190,
+          "url": "https://github.com/moldovancsaba/discountdirect/issues/16"
+        }
+      ],
+      "area": "discountdirect",
+      "readiness": "Later"
+    },
+    {
+      "key": "42",
+      "number": 44,
+      "title": "Benefits: Refund settlement - reconcile issuer liability per currency",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/44",
+      "milestone": "M6",
+      "executionOrder": 440,
+      "blockedBy": [
+        25,
+        43
+      ],
+      "externalBlockedBy": [],
+      "area": "discountdirect",
+      "readiness": "Later"
+    },
+    {
+      "key": "43",
+      "number": 45,
+      "title": "Benefits: Customer wallet view - accessible participating-shop offers and checkout consent",
+      "url": "https://github.com/moldovancsaba/deliafrica/issues/45",
+      "milestone": "M6",
+      "executionOrder": 450,
+      "blockedBy": [
+        39,
+        42,
+        43,
+        44
+      ],
+      "externalBlockedBy": [],
+      "area": "design",
+      "readiness": "Later"
+    }
+  ]
+}
