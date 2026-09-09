@@ -40,6 +40,7 @@
     "@playwright/test": "1.55.0",
     "@sovereignsquad/gds-a11y": "6.7.0",
     "@sovereignsquad/gds-compliance": "6.7.0",
-    "@sovereignsquad/gds-eslint-config": "6.7.0"
+    "@sovereignsquad/gds-eslint-config": "6.7.0",
+    "eslint": "10.10.0"
   }
 }
