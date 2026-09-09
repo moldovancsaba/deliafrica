@@ -1,0 +1,3 @@
+import {requireTestDatabase} from './test-environment.mjs';import {spawnSync} from 'node:child_process';import fs from 'node:fs';
+try{requireTestDatabase();const paths=fs.readdirSync('tests/integration').filter(f=>f.endsWith('.test.mjs')).map(f=>'tests/integration/'+f);if(!paths.length)throw new Error('No integration tests');const result=spawnSync(process.execPath,['--test',...paths],{stdio:'inherit'});process.exitCode=result.status===0?0:1;}
+catch{console.error('Integration check BLOCKED/FAILED: supply a dedicated test database and verify connectivity. No production fallback was attempted.');process.exitCode=1;}

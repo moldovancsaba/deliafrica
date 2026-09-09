@@ -1,0 +1,28 @@
+name: Delivery checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.19.0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - name: Start isolated MongoDB replica
+        run: docker run --detach --name customer-direct-mongo --publish 127.0.0.1:27119:27119 mongo:8.0.26 --replSet customerDirectTest --bind_ip_all --port 27119
+      - run: node scripts/start-test-replica.mjs
+      - name: Integration tests
+        env:
+          CUSTOMER_DIRECT_TEST_DB: customer_direct_test_ci
+          CUSTOMER_DIRECT_TEST_MONGODB_URI: mongodb://127.0.0.1:27119/?replicaSet=customerDirectTest
+        run: pnpm test:integration

@@ -45,3 +45,5 @@ The repository is linked to Vercel and `main` is the production branch. A push t
 ## customer.direct platform planning
 
 The multi-shop platform backlog is managed on the [customer.direct project board](https://github.com/users/moldovancsaba/projects/62). See the [implementation plan](CUSTOMER_DIRECT_IMPLEMENTATION_PLAN.md) and [engineering execution ledger](docs/customer-direct/README.md). All planned frontend work uses GDS exclusively, with accessibility, localization and multicurrency support from the foundation.
+
+Foundation verification: `pnpm check`; isolated database verification: `pnpm test:integration`. See [baseline handover](docs/customer-direct/01.md), [check workflow](docs/customer-direct/02.md), and [money contract](docs/customer-direct/16.md).

@@ -1,0 +1,111 @@
+{
+  "commit": "046fe532b6d48e949a1fb5e6bd04a09094f8ef0e",
+  "node": "24.19.0",
+  "installed": {
+    "@next/third-parties": "15.5.2",
+    "@vercel/analytics": "2.0.1",
+    "mongoose": "8.24.4",
+    "next": "15.5.25",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "socket.io": "4.8.3",
+    "socket.io-client": "4.8.3"
+  },
+  "routes": [
+    "app/api/admin/integrations/route.js",
+    "app/api/admin/orders/route.js",
+    "app/api/admin/products/route.js",
+    "app/api/admin/users/[ssoUserId]/route.js",
+    "app/api/admin/users/route.js",
+    "app/api/auth/login/route.js",
+    "app/api/auth/logout/route.js",
+    "app/api/auth/session/route.js",
+    "app/api/catalog/route.js",
+    "app/api/health/route.js",
+    "app/api/oauth/callback/route.js",
+    "app/api/orders/route.js",
+    "app/api/product-settings/route.js",
+    "app/api/profile/route.js",
+    "app/api/site-settings/route.js",
+    "app/api/socket-io/route.js",
+    "app/auth/callback/route.js",
+    "app/auth/error/page.js",
+    "app/categories/[slug]/page.js",
+    "app/dashboard/content/page.js",
+    "app/dashboard/integrations/page.js",
+    "app/dashboard/legal/page.js",
+    "app/dashboard/orders/page.js",
+    "app/dashboard/page.js",
+    "app/dashboard/products/page.js",
+    "app/dashboard/storefront/page.js",
+    "app/dashboard/system/page.js",
+    "app/dashboard/users/[ssoUserId]/page.js",
+    "app/dashboard/users/page.js",
+    "app/legal/[slug]/page.js",
+    "app/page.js",
+    "app/products/[slug]/page.js",
+    "app/profile/page.js"
+  ],
+  "models": [
+    "models/IntegrationSetting.js",
+    "models/Order.js",
+    "models/Product.js",
+    "models/ProductSetting.js",
+    "models/SiteSetting.js",
+    "models/User.js"
+  ],
+  "environmentNames": [
+    "APP_URL",
+    "BARION_POS_KEY",
+    "BILLINGO_API_KEY",
+    "MONGODB_URI",
+    "NODE_ENV",
+    "PACKETA_API_KEY",
+    "SETTINGS_ENCRYPTION_KEY",
+    "SSO_CLIENT_ID",
+    "SSO_CLIENT_SECRET",
+    "SSO_ORIGIN",
+    "VERCEL",
+    "VERCEL_ENV",
+    "VERCEL_GIT_COMMIT_SHA",
+    "VERCEL_PROJECT_PRODUCTION_URL",
+    "VERCEL_REGION",
+    "deli_MONGODB_URI"
+  ],
+  "globalModelConsumers": [
+    "app/api/admin/integrations/route.js",
+    "app/api/admin/orders/route.js",
+    "app/api/admin/products/route.js",
+    "app/api/admin/users/[ssoUserId]/route.js",
+    "app/api/admin/users/route.js",
+    "app/api/health/route.js",
+    "app/api/orders/route.js",
+    "app/api/product-settings/route.js",
+    "app/api/profile/route.js",
+    "app/api/site-settings/route.js",
+    "lib/auth.js",
+    "lib/catalog-store.js",
+    "lib/site-settings.js"
+  ],
+  "capabilities": {
+    "implemented": [
+      "catalogue",
+      "product detail",
+      "cart",
+      "order intake",
+      "SSO",
+      "admin CRUD",
+      "analytics consent"
+    ],
+    "configuredOnly": [
+      "packeta",
+      "barion",
+      "billingo"
+    ],
+    "missing": [
+      "multi-tenant registry",
+      "provider-verified payments",
+      "cross-shop benefits"
+    ]
+  }
+}

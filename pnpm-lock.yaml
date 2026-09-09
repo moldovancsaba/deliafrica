@@ -9,28 +9,28 @@ importers:
   .:
     dependencies:
       '@next/third-parties':
-        specifier: ^15.5.2
+        specifier: 15.5.2
         version: 15.5.2(next@15.5.25(@types/node@26.4.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
       '@vercel/analytics':
-        specifier: ^2.0.1
+        specifier: 2.0.1
         version: 2.0.1(next@15.5.25(@types/node@26.4.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
       mongoose:
-        specifier: ^8.18.0
+        specifier: 8.24.4
         version: 8.24.4
       next:
-        specifier: ^15.5.2
+        specifier: 15.5.25
         version: 15.5.25(@types/node@26.4.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       react:
-        specifier: ^19.1.1
+        specifier: 19.2.8
         version: 19.2.8
       react-dom:
-        specifier: ^19.1.1
+        specifier: 19.2.8
         version: 19.2.8(react@19.2.8)
       socket.io:
-        specifier: ^4.8.1
+        specifier: 4.8.3
         version: 4.8.3
       socket.io-client:
-        specifier: ^4.8.1
+        specifier: 4.8.3
         version: 4.8.3
 
 packages:

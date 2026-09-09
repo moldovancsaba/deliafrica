@@ -1,0 +1,3 @@
+import mongoose from 'mongoose';
+const uri='mongodb://127.0.0.1:27119/admin?directConnection=true';const c=await mongoose.createConnection(uri,{serverSelectionTimeoutMS:5000}).asPromise();
+try{try{await c.db.admin().command({replSetInitiate:{_id:'customerDirectTest',members:[{_id:0,host:'127.0.0.1:27119'}]}});}catch(e){if(e.codeName!=='AlreadyInitialized')throw e;}let ready=false;for(let attempt=0;attempt<50;attempt++){if((await c.db.admin().command({hello:1})).isWritablePrimary){ready=true;break;}await new Promise(r=>setTimeout(r,100));}if(!ready)throw new Error('Test replica did not elect a primary');console.log('Local test replica ready');}finally{await c.close();}

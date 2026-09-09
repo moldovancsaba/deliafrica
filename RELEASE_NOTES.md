@@ -1,3 +1,22 @@
+# Release Notes — v0.13.0
+
+## ✅ New Features
+- Added a reproducible legacy compatibility inventory and synthetic fixtures.
+- Added Node unit checks and isolated MongoDB replica-set integration checks.
+- Added internal platform registry, membership/grant checks, authenticated credential envelopes, bounded shop connection pool and exact-money helpers. These are foundation modules; multi-shop onboarding is not enabled yet.
+
+## ✅ Fixed Bugs
+- Test tooling now rejects missing or production database configuration instead of falling back to live application credentials.
+
+## ✅ Known Issues
+- Existing storefront behavior remains single-shop. No payment-provider or tenant migration rollout is claimed.
+- GDS adoption, complete connection lifecycle, administrator onboarding and the remaining engineering backlog are still in progress.
+
+## ✅ Future Roadmap
+- Complete the GDS foundation, tenant-aware administration and verified production migration through the customer.direct board.
+
+---
+
 # Release Notes — v0.12.2
 
 ## ✅ New Features
