@@ -47,3 +47,14 @@ The repository is linked to Vercel and `main` is the production branch. A push t
 The multi-shop platform backlog is managed on the [customer.direct project board](https://github.com/users/moldovancsaba/projects/62). See the [implementation plan](CUSTOMER_DIRECT_IMPLEMENTATION_PLAN.md) and [engineering execution ledger](docs/customer-direct/README.md). All planned frontend work uses GDS exclusively, with accessibility, localization and multicurrency support from the foundation.
 
 Foundation verification: `pnpm check`; isolated database verification: `pnpm test:integration`. See [baseline handover](docs/customer-direct/01.md), [check workflow](docs/customer-direct/02.md), and [money contract](docs/customer-direct/16.md).
+
+## customer.direct managed mode
+
+The public deli storefront can keep its current UX/UI while reading managed catalogue, stock, settings and checkout data from customer.direct. Configure these Vercel variables only after the deli shop exists, is imported, has a verified canonical host and passes the customer.direct release gate:
+
+- `CUSTOMER_DIRECT_MANAGED=1`
+- `CUSTOMER_DIRECT_STOREFRONT_ORIGIN=https://customerdirect.vercel.app`
+- `CUSTOMER_DIRECT_STOREFRONT_HOST=<the public deli host routed in customer.direct>`
+- `CUSTOMER_DIRECT_REQUIRED=1` after cutover, when local fallback should no longer be used.
+
+The adapter preserves existing deli routes, styling, product imagery and copy, and stores customer.direct product IDs invisibly for quote/order submission.

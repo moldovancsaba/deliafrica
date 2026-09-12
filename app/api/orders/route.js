@@ -5,6 +5,7 @@ import User from '@/models/User';
 import { getCatalog } from '@/lib/catalog-store';
 import { getSession, isAuthConfigured } from '@/lib/auth';
 import { getSiteSettings } from '@/lib/site-settings';
+import { createCustomerDirectOrder } from '@/lib/customer-direct-store';
 
 export const dynamic = 'force-dynamic';
 function fail(message,status=400){return NextResponse.json({ok:false,error:message},{status});}
@@ -27,6 +28,12 @@ export async function POST(request){
   const billingAddress=addressString(profile?.billingDetails)||address;const taxNumber=String(profile?.billingDetails?.taxNumber||'').trim();
   if(!customerName||!email.includes('@')||!address)return fail(copy.requiredCustomerFields);
   if(!Array.isArray(body.items)||body.items.length===0)return fail(copy.cartEmpty);
+  try{
+    const managed=await createCustomerDirectOrder({items:body.items,customer:{name:customerName,email,phone,address,billingName,billingAddress,taxNumber,note:String(body.customerNote||'').trim()}});
+    if(managed)return NextResponse.json({...managed,message:copy.orderSaved});
+  }catch(error){
+    return fail(error instanceof Error?error.message:copy.invalidOrder,502);
+  }
   const catalogue=new Map((await getCatalog()).map(product=>[product.id,product]));
   const items=[];let total=0;
   for(const row of body.items){const product=catalogue.get(row.productId);const quantity=Math.max(1,Math.min(20,Number(row.quantity)||1));if(!product||product.price==null||product.purchasable===false)return fail(copy.unavailable);items.push({productId:product.id,sku:product.sku||'',name:product.name,quantity,unitPrice:product.price,vatRate:product.vatRate??27});total+=product.price*quantity;}
