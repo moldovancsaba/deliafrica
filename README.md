@@ -38,6 +38,16 @@ npm install
 npm run dev
 ```
 
+Release verification for the preserved deli storefront:
+
+```bash
+pnpm test
+pnpm test:i18n
+pnpm test:a11y
+pnpm check
+pnpm build
+```
+
 ## Production
 
 The repository is linked to Vercel and `main` is the production branch. A push to `main` triggers production deployment.
@@ -58,3 +68,5 @@ The public deli storefront can keep its current UX/UI while reading managed cata
 - `CUSTOMER_DIRECT_REQUIRED=1` after cutover, when local fallback should no longer be used.
 
 The adapter preserves existing deli routes, styling, product imagery and copy, and stores customer.direct product IDs invisibly for quote/order submission.
+
+Preserved-storefront accessibility and i18n evidence is recorded in [issue #39 handover](docs/customer-direct/39-preserved-storefront-a11y.md).

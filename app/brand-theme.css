@@ -17,7 +17,8 @@
 body{background:var(--warm);color:var(--ink)}
 .site-header{background:rgba(251,247,244,.96)}
 .hero,.trust-strip,.store-footer,.admin-sidebar{background:var(--ink)}
-.button-red,.cart-button span,.product-bottom button,.editorial-card.red,.admin-button.red,.cookie-actions .accept{background:var(--red)!important}
+.button-red,.cart-button span,.product-bottom button,.admin-button.red,.cookie-actions .accept{background:#c40000!important}
+.editorial-card.red{background:var(--red)!important}
 .button-dark,.cart-button,.category-reset.active,.badge,.legal-back,.product-list button.active{background:var(--ink)!important}
 .editorial-card.olive{background:var(--olive)!important}
 .editorial-card.fig{background:var(--fig)!important}
