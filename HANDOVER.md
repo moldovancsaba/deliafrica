@@ -30,7 +30,7 @@ pnpm check               # gate: tests + scripts/baseline-check.mjs + next build
 pnpm test:integration    # needs CUSTOMER_DIRECT_TEST_DB / CUSTOMER_DIRECT_TEST_MONGODB_URI
 ```
 
-Deploy by pushing `main` (owner or reviewer pushes). After changing production environment variables, trigger a new production deployment so the runtime picks them up (README).
+Deploy by pushing `main`. After changing production environment variables, trigger a new production deployment so the runtime picks them up (README).
 
 ## In flight
 

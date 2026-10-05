@@ -31,7 +31,7 @@ There is no lint script and no docs link checker. A change is ready when `pnpm c
 
 - `main` is production: a push to `main` deploys to Vercel production (README).
 - `main` is protected on GitHub: required status check `checks` (workflow "Delivery checks"), branch must be up to date, force pushes disabled.
-- Commit locally on the current branch. Do not push, create branches, tags or stashes unless the owner asks; the owner or reviewer pushes.
+- Work is committed directly on `main` (the history has no pull-request flow); run `pnpm check`, the gate, before pushing.
 - Commit messages describe the change only.
 
 ## Commit identity and attribution
