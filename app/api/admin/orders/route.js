@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
 import { connectToDatabase } from '@/lib/db';
 import Order from '@/models/Order';
+import { managedAdminResponse } from '@/lib/managed-admin';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,6 +22,7 @@ async function admin() {
 export async function GET(request) {
   const session = await admin();
   if (!session) return NextResponse.json({ error:'Admin role required' }, { status:403 });
+  const managed = managedAdminResponse(); if (managed) return managed;
   const db = await connectToDatabase();
   if (!db.connected) return NextResponse.json({ error:'MongoDB unavailable' }, { status:503 });
   const url = new URL(request.url);
@@ -32,6 +34,7 @@ export async function GET(request) {
 export async function PUT(request) {
   const session = await admin();
   if (!session) return NextResponse.json({ error:'Admin role required' }, { status:403 });
+  const managed = managedAdminResponse(); if (managed) return managed;
   const body = await request.json().catch(() => null);
   if (!body?.reference) return NextResponse.json({ error:'Order reference required' }, { status:400 });
   const db = await connectToDatabase();

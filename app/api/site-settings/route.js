@@ -6,6 +6,7 @@ import { getSiteSettings } from '@/lib/site-settings';
 import { DEFAULT_SITE_SETTINGS } from '@/lib/site-config';
 import SiteSetting from '@/models/SiteSetting';
 import IntegrationSetting from '@/models/IntegrationSetting';
+import { managedAdminResponse } from '@/lib/managed-admin';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,6 +33,7 @@ export async function GET() {
 export async function PUT(request) {
   const session = await getSession();
   if (!session || session.permission.status !== 'approved' || session.permission.role !== 'admin') return NextResponse.json({ error: 'Admin role required' }, { status: 403 });
+  const managed = managedAdminResponse(); if (managed) return managed;
   const body = await request.json();
   const updates = {};
   if (body.heroMode !== undefined) {

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { categories, products, formatPrice } from '@/lib/products';
+import { categories as defaultCategories, products, formatPrice } from '@/lib/products';
 import ProductVisual from '@/app/components/ProductVisual';
 import BrandLogo from '@/app/components/BrandLogo';
 import { DEFAULT_HERO_MODE, fixedHeroByCategory, homepageFixedHeroes } from '@/lib/hero-config';
@@ -24,6 +24,7 @@ function savedAddress(address = {}) {
 
 export default function Home() {
   const [catalog, setCatalog] = useState(products);
+  const [storeCategories, setStoreCategories] = useState(defaultCategories);
   const [category, setCategory] = useState('all');
   const [cart, setCart] = useState({});
   const [cartOpen, setCartOpen] = useState(false);
@@ -66,6 +67,7 @@ export default function Home() {
     }).catch(() => setSession({ authenticated: false }));
     fetch('/api/catalog', { cache: 'no-store' }).then(res => res.json()).then(data => {
       if (Array.isArray(data.products) && data.products.length) setCatalog(data.products);
+      if (Array.isArray(data.categories) && data.categories.length) setStoreCategories(data.categories);
     }).catch(() => {});
     fetch('/api/site-settings', { cache: 'no-store' }).then((res) => res.json()).then((data) => {
       setHeroMode(data.heroMode || DEFAULT_HERO_MODE);
@@ -136,7 +138,7 @@ export default function Home() {
 
     <section className="shop" id="shop">
       <div className="section-head"><div><span className="eyebrow dark">{uiCopy.shop.eyebrow}</span><h2>{uiCopy.shop.title}</h2></div><button className={`category-reset ${category==='all'?'active':''}`} onClick={()=>setCategory('all')}>{uiCopy.shop.allProducts}</button></div>
-      <div className={`category-selector mode-${categorySelectorMode}`} aria-label={uiCopy.shop.title}>{categories.filter(c=>c.id!=='all').map(c=>{const cc=uiCopy.categories?.[c.id]||{};const lines=[cc.visualLine1,cc.visualLine2].filter(Boolean);return <div className={`category-tile ${c.tone} ${category===c.id?'active':''}`} key={c.id}><button onClick={()=>setCategory(c.id)} aria-pressed={category===c.id}><span>{(lines.length?lines:c.visualLabel).map(line=><b key={line}>{line}</b>)}</span><Image src={categorySelectorMode==='fixed'?fixedHeroByCategory[c.id]:c.image} alt={cc.label||c.label} fill sizes="(max-width: 650px) 62vw, 17vw"/></button><Link href={`/categories/${c.id}`}>{uiCopy.shop.categoryIntro}</Link></div>;})}</div>
+      <div className={`category-selector mode-${categorySelectorMode}`} aria-label={uiCopy.shop.title}>{storeCategories.filter(c=>c.id!=='all').map(c=>{const cc=uiCopy.categories?.[c.id]||{};const lines=[cc.visualLine1,cc.visualLine2].filter(Boolean);return <div className={`category-tile ${c.tone} ${category===c.id?'active':''}`} key={c.id}><button onClick={()=>setCategory(c.id)} aria-pressed={category===c.id}><span>{(lines.length?lines:c.visualLabel).map(line=><b key={line}>{line}</b>)}</span><Image src={categorySelectorMode==='fixed'?(fixedHeroByCategory[c.id]||c.image):c.image} alt={cc.label||c.label} fill sizes="(max-width: 650px) 62vw, 17vw"/></button><Link href={`/categories/${c.id}`}>{uiCopy.shop.categoryIntro}</Link></div>;})}</div>
       <div className="product-grid">{shown.map(product=><article className="product-card" key={product.id}><button className={`visual-button tone-${product.tone}`} onClick={()=>setDetail(product)}><ProductVisual product={product}/><span className="badge">{product.badge}</span></button><div className="product-info"><small>{product.subtitle}</small><h3>{product.name}</h3><p>{product.story}</p><div className="product-bottom"><strong>{formatPrice(product.price)}</strong><button disabled={product.price==null||product.purchasable===false} onClick={()=>add(product.id)}>{product.price==null||product.purchasable===false?uiCopy.shop.unavailable:'+'}</button></div></div></article>)}</div>
     </section>
 

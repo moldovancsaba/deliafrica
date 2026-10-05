@@ -3,6 +3,7 @@ import { getSession } from '@/lib/auth';
 import { connectToDatabase } from '@/lib/db';
 import User from '@/models/User';
 import Order from '@/models/Order';
+import { managedAdminResponse } from '@/lib/managed-admin';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,6 +15,7 @@ async function requireAdmin() {
 export async function GET(_request, { params }) {
   const session = await requireAdmin();
   if (!session) return NextResponse.json({ error: 'Admin role required' }, { status: 403 });
+  const managed = managedAdminResponse(); if (managed) return managed;
   const db = await connectToDatabase();
   if (!db.connected) return NextResponse.json({ error: 'MongoDB unavailable' }, { status: 503 });
 

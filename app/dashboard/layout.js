@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getSession, isAuthConfigured } from '@/lib/auth';
+import { customerDirectConfig } from '@/lib/customer-direct-store';
+import { customerDirectManagementUrl } from '@/lib/managed-admin';
 import BrandLogo from '@/app/components/BrandLogo';
 import './admin.css';
 
@@ -19,6 +21,7 @@ const nav = [
 ];
 
 export default async function DashboardLayout({ children }) {
+  if (customerDirectConfig().enabled) redirect(customerDirectManagementUrl());
   if (!isAuthConfigured()) return <main className="auth-state"><h1>Admin belépés nincs konfigurálva.</h1><a href="/">Vissza a webshophoz</a></main>;
   const session = await getSession();
   if (!session) redirect('/api/auth/login?returnTo=/dashboard');

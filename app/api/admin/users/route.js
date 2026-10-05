@@ -3,6 +3,7 @@ import { getSession } from '@/lib/auth';
 import { connectToDatabase } from '@/lib/db';
 import User from '@/models/User';
 import Order from '@/models/Order';
+import { managedAdminResponse } from '@/lib/managed-admin';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,6 +33,7 @@ async function backfillOrderUsers() {
 export async function GET() {
   const session = await requireAdmin();
   if (!session) return NextResponse.json({ error: 'Admin role required' }, { status: 403 });
+  const managed = managedAdminResponse(); if (managed) return managed;
   const db = await connectToDatabase();
   if (!db.connected) return NextResponse.json({ error: 'MongoDB unavailable' }, { status: 503 });
   await backfillOrderUsers();
@@ -69,6 +71,7 @@ export async function GET() {
 export async function PATCH(request) {
   const session = await requireAdmin();
   if (!session) return NextResponse.json({ error: 'Admin role required' }, { status: 403 });
+  const managed = managedAdminResponse(); if (managed) return managed;
   const body = await request.json().catch(() => null);
   if (!body?.ssoUserId || !['user','admin'].includes(body.role)) return NextResponse.json({ error: 'Valid user and role are required' }, { status: 400 });
   if (body.ssoUserId === session.user.id && body.role !== 'admin') return NextResponse.json({ error: 'You cannot remove your own admin access.' }, { status: 400 });

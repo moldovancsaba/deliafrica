@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import { getCatalog } from '@/lib/catalog-store';
+import { getCatalogData } from '@/lib/catalog-store';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const products = await getCatalog();
-  return NextResponse.json({ products }, { headers: { 'cache-control': 'no-store, max-age=0' } });
+  const catalog = await getCatalogData();
+  return NextResponse.json(catalog, { headers: { 'cache-control': 'no-store, max-age=0' } });
 }

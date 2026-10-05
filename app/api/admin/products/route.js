@@ -3,6 +3,7 @@ import { getSession } from '@/lib/auth';
 import { connectToDatabase } from '@/lib/db';
 import { ensureSeedProducts } from '@/lib/catalog-store';
 import Product from '@/models/Product';
+import { managedAdminResponse } from '@/lib/managed-admin';
 
 export const dynamic = 'force-dynamic';
 
@@ -38,6 +39,7 @@ function clean(body, existing = {}) {
 export async function GET() {
   const session = await admin();
   if (!session) return NextResponse.json({ error: 'Admin role required' }, { status: 403 });
+  const managed = managedAdminResponse(); if (managed) return managed;
   const db = await connectToDatabase();
   if (!db.connected) return NextResponse.json({ error: 'MongoDB unavailable' }, { status: 503 });
   await ensureSeedProducts();
@@ -47,6 +49,7 @@ export async function GET() {
 
 export async function POST(request) {
   const session = await admin(); if (!session) return NextResponse.json({ error: 'Admin role required' }, { status: 403 });
+  const managed = managedAdminResponse(); if (managed) return managed;
   const body = await request.json().catch(() => null); if (!body) return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
   const db = await connectToDatabase(); if (!db.connected) return NextResponse.json({ error: 'MongoDB unavailable' }, { status: 503 });
   const data = clean(body); if (!data.id || !data.slug || !data.name || !data.category) return NextResponse.json({ error: 'id, slug, name and category are required' }, { status: 400 });
@@ -57,6 +60,7 @@ export async function POST(request) {
 
 export async function PUT(request) {
   const session = await admin(); if (!session) return NextResponse.json({ error: 'Admin role required' }, { status: 403 });
+  const managed = managedAdminResponse(); if (managed) return managed;
   const body = await request.json().catch(() => null); if (!body?.id) return NextResponse.json({ error: 'Product id required' }, { status: 400 });
   const db = await connectToDatabase(); if (!db.connected) return NextResponse.json({ error: 'MongoDB unavailable' }, { status: 503 });
   const existing = await Product.findOne({ id: body.id }).lean(); if (!existing) return NextResponse.json({ error: 'Product not found' }, { status: 404 });
@@ -67,6 +71,7 @@ export async function PUT(request) {
 
 export async function DELETE(request) {
   const session = await admin(); if (!session) return NextResponse.json({ error: 'Admin role required' }, { status: 403 });
+  const managed = managedAdminResponse(); if (managed) return managed;
   const body = await request.json().catch(() => null); if (!body?.id) return NextResponse.json({ error: 'Product id required' }, { status: 400 });
   const db = await connectToDatabase(); if (!db.connected) return NextResponse.json({ error: 'MongoDB unavailable' }, { status: 503 });
   const result = await Product.deleteOne({ id: body.id });

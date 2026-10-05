@@ -3,6 +3,7 @@ import { getSession } from '@/lib/auth';
 import { connectToDatabase } from '@/lib/db';
 import { encryptSecret } from '@/lib/secret-store';
 import IntegrationSetting from '@/models/IntegrationSetting';
+import { managedAdminResponse } from '@/lib/managed-admin';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,6 +21,7 @@ async function requireAdmin() {
 export async function GET() {
   const session = await requireAdmin();
   if (!session) return NextResponse.json({ error: 'Admin role required' }, { status: 403 });
+  const managed = managedAdminResponse(); if (managed) return managed;
   const mongo = await connectToDatabase();
   if (!mongo.connected) return NextResponse.json({ error: 'MongoDB unavailable' }, { status: 503 });
   const rows = await IntegrationSetting.find({ provider: { $in: Object.keys(PROVIDERS) } }).lean();
@@ -41,6 +43,7 @@ export async function GET() {
 export async function PUT(request) {
   const session = await requireAdmin();
   if (!session) return NextResponse.json({ error: 'Admin role required' }, { status: 403 });
+  const managed = managedAdminResponse(); if (managed) return managed;
   const body = await request.json().catch(() => null);
   const spec = body && PROVIDERS[body.provider];
   if (!spec) return NextResponse.json({ error: 'Unknown provider' }, { status: 400 });

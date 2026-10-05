@@ -3,6 +3,7 @@ import { getSession } from '@/lib/auth';
 import { connectToDatabase } from '@/lib/db';
 import { products } from '@/lib/products';
 import ProductSetting from '@/models/ProductSetting';
+import { managedAdminResponse } from '@/lib/managed-admin';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,6 +21,7 @@ export async function GET() {
 export async function PUT(request) {
   const session = await getSession();
   if (!session || session.permission.status !== 'approved' || session.permission.role !== 'admin') return NextResponse.json({ error: 'Admin role required' }, { status: 403 });
+  const managed = managedAdminResponse(); if (managed) return managed;
   const body = await request.json();
   const product = products.find((item) => item.id === body.productId);
   const widthMm = Number(body.width);
