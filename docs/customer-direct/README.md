@@ -1,5 +1,7 @@
 # customer.direct engineering delivery
 
+> Status note (2026-10-05): historical backlog (issues #1-#45 in this repository; 39 are still open on GitHub). Platform work is now tracked in [moldovancsaba/customer-direct](https://github.com/moldovancsaba/customer-direct) and its [board](https://github.com/users/moldovancsaba/projects/62). This repository's own board is [projects/70](https://github.com/users/moldovancsaba/projects/70). `backlog.json` records an older board (project 4) that no longer resolves.
+
 [Project board](https://github.com/users/moldovancsaba/projects/62) · [Repository issues](https://github.com/moldovancsaba/deliafrica/issues?q=is%3Aissue+label%3Acustomer.direct) · [Milestones](https://github.com/moldovancsaba/deliafrica/milestones)
 
 Canonical issue quality/structure: [GDS #81](https://github.com/sovereignsquad/general-design-system/issues/81). The 23 required sections are present on every issue.

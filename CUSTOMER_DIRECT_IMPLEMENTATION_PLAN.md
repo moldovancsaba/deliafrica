@@ -1,5 +1,7 @@
 # customer.direct — multi-shop commerce implementation plan
 
+> Status note (2026-10-05): historical planning record. The platform was built in the separate repository [moldovancsaba/customer-direct](https://github.com/moldovancsaba/customer-direct) (see its [handover](https://github.com/moldovancsaba/customer-direct/blob/main/handover.md)); this repository keeps the deli storefront and the managed-mode bridge. Statements below such as "implementation has not started" are true as of 2026-09-09 only.
+
 Version: 1.1 · 9 September 2026 · Planning deliverable; implementation has not started.
 
 Canonical engineering issue standard: https://github.com/sovereignsquad/general-design-system/issues/81. Latest user instruction takes precedence: ALL UI/UX/frontend uses GDS exclusively, including basic branding, storefront, administration and advanced customization. No separate visual system or unrestricted custom CSS is permitted.
