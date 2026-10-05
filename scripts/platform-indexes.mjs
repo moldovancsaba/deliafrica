@@ -1,0 +1,2 @@
+import {connectRegistry,closeRegistryConnections} from '../lib/platform/database.mjs';
+try{const {models}=await connectRegistry();for(const model of Object.values(models)){await model.createIndexes();console.log('Indexes verified:',model.modelName);}}catch{console.error('Platform index preparation failed; no business collection was deleted.');process.exitCode=1;}finally{await closeRegistryConnections();}
