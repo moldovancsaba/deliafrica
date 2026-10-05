@@ -43,7 +43,7 @@ There is no lint script and no docs link checker. A change is ready when `pnpm c
 
 This repository has exactly one GitHub project board: https://github.com/users/moldovancsaba/projects/70. Track work as issues and items on that board; never create a second board. Standard Status columns, in order: IDEABANK (SOMEDAY), Roadmap (LATER), Backlog (SOONER), Todo (NEXT), In Progress (NOW), Review (ALMOST), Done, Declined (NEVER).
 
-Issues about the Customer Direct work may live in `moldovancsaba/customer-direct` (its board is project 62), not here.
+Issues about the Customer Direct platform live in `moldovancsaba/customer-direct` (its board is project 62), not here; this repository keeps issues about the deli storefront's own code (decision of 2026-10-05, when the 39 programme issues moved).
 
 ## Do not
 

@@ -34,9 +34,9 @@ Deploy by pushing `main`. After changing production environment variables, trigg
 
 ## In flight
 
-- Board 70 is empty (0 items on 2026-10-05). The 39 open issues of this repository are not on it yet and need triage.
-- Open: 39 issues, 0 PRs. All 39 carry the label `customer.direct`, were created on 2026-09-09 and are mostly `execution:blocked` or `execution:later`. Most relevant: [#37](https://github.com/moldovancsaba/deliafrica/issues/37) deli tenant conversion, [#29](https://github.com/moldovancsaba/deliafrica/issues/29) storefront surfaces, [#31](https://github.com/moldovancsaba/deliafrica/issues/31) domains (each `execution:partial`, updated 2026-09-12).
-- Issues about the managed-mode work may live in `moldovancsaba/customer-direct` (8 open, #13 to #20, on its board 62). The platform side is documented in its [handover.md](https://github.com/moldovancsaba/customer-direct/blob/main/handover.md); do not copy it here.
+- Board 70 tracks this repository's own issues. It has one item: issue #46, the managed-mode switch. Issue-location rule (decided 2026-10-05): the customer.direct platform programme lives in `moldovancsaba/customer-direct`; this repository keeps only issues about the deli storefront's own code.
+- Open: 1 issue (#46), 0 PRs. The 39 programme issues (`#3` to `#45`, label `customer.direct`) moved on 2026-10-05 to `moldovancsaba/customer-direct` as #21 to #59 on its board 62; the old links redirect, and the mapping is in that repository's `docs/customer-direct/issue-transfer-2026-10-05.md`.
+- The platform side is documented in the `customer-direct` repository (its `HANDOVER.md`); do not copy it here.
 
 ## Traps and decisions
 
@@ -57,7 +57,7 @@ Deploy by pushing `main`. After changing production environment variables, trigg
 3. `pnpm install --frozen-lockfile`, then `pnpm test` (expect 23 passing) and `pnpm check` before changing code.
 4. Confirm your `.env.local` matches the mode you want (see the managed-mode trap above).
 5. Smoke production: `curl -sI https://deli.doneisbetter.com/dashboard` should show 307 to Customer Direct.
-6. Triage the 39 open issues onto board 70 (close or move the ones now owned by `customer-direct`).
+6. File any new storefront issue here and keep it on board 70; platform work goes to `customer-direct`.
 7. If you ship a change: add a `RELEASE_NOTES.md` entry and keep `package.json` and `lib/version.js` in step.
 
 ## Where things live
